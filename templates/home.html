@@ -21,9 +21,7 @@
     <title>Just Order</title>
   </head>
   <body>
-    <nav
-      class="navbar navbar-expand-md navbar-light bg-info fixed-top"
-    >
+    <nav class="navbar navbar-expand-md navbar-light bg-info fixed-top">
       <div class="container-fluid">
         <a href="{{url_for('home')}}">
           <i class="fa-solid fa-house fa-2x">
@@ -114,13 +112,45 @@
                     Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
                     hvidløgs dip
                   </p>
-                  <p class="pris">95,00 kr.</p>
+                  <p class="pris">65,00 kr.</p>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
                   <img
                     src="/static/images/bornholmer.png"
+                    class="responsive-image"
+                    alt="bornholmer"
+                  />
+                  <button type="button" class="btn px-1 no-bg larger-plus">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <br />
+          <br />
+
+          <section id="menu-section">
+            <div class="container-fluid font-weight-bold">Menu</div>
+            <br />
+            <div class="container-fluid">
+              <div class="row row-hover">
+                <div class="col-9">
+                  <p class="titel">Durum menu</p>
+                  <br />
+                  <p class="description">
+                    Hjemmebagt fladbrød med saftigt kød og friske danske
+                    grøntsager
+                  </p>
+                  <p class="pris">75,00 kr.</p>
+                </div>
+                <div
+                  class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
+                >
+                  <img
+                    src="/static/images/durummenu.jpeg"
                     class="responsive-image"
                     alt="bornholmer"
                   />
@@ -131,22 +161,25 @@
               </div>
             </div>
             <br />
+            <br />
+          </section>
+
+          <section id="drinks-section">
+            <div class="container-fluid font-weight-bold">Drikkevarer</div>
+            <br />
             <div class="container-fluid">
               <div class="row row-hover">
                 <div class="col-9">
-                  <p class="titel">Bornholmer</p>
+                  <p class="titel">Dåsecola 0,33 L</p>
                   <br />
-                  <p class="description">
-                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
-                    hvidløgs dip
-                  </p>
-                  <p class="pris">95,00 kr.</p>
+                  <p class="description">Iskold Cola Zero</p>
+                  <p class="pris">10,00 kr.</p>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
                   <img
-                    src="/static/images/bornholmer.png"
+                    src="/static/images/colazero.jpeg"
                     class="responsive-image"
                     alt="bornholmer"
                   />
@@ -156,19 +189,9 @@
                 </div>
               </div>
             </div>
+            <br />
+            <br />
           </section>
-          <br />
-
-          <section id="menu-section">
-            <!-- Content for the Menu section -->
-            <!-- ... -->
-          </section>
-
-          <section id="drinks-section">
-            <!-- Content for the Drikkevarer section -->
-            <!-- ... -->
-          </section>
-          <br />
 
           <section id="dip-section">
             <div class="container-fluid font-weight-bold">Dips</div>
@@ -176,19 +199,16 @@
             <div class="container-fluid">
               <div class="row row-hover">
                 <div class="col-9">
-                  <p class="titel">Bornholmer</p>
+                  <p class="titel">Spicy Mayo</p>
                   <br />
-                  <p class="description">
-                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
-                    hvidløgs dip
-                  </p>
-                  <p class="pris">95,00 kr.</p>
+                  <p class="description">Mild krydret chilimayo</p>
+                  <p class="pris">8,00 kr.</p>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
                   <img
-                    src="/static/images/bornholmer.png"
+                    src="/static/images/spicymayo.jpeg"
                     class="responsive-image"
                     alt="bornholmer"
                   />
@@ -198,50 +218,26 @@
                 </div>
               </div>
             </div>
-            <hr />
-            <br />
           </section>
         </div>
 
         <!--kurv skal laves her-->
-        <div class="col-12 col-lg-3 bg-light d-none d-lg-block" id="kurv"> 
-          <div class="container d-flex justify-content-center mt-5 font-weight-bold">KURV</div>
-          <div class="container d-flex justify-content-center mt-5 font-weight-bold">FYLD DIN KURV</div>
-          <p class="container d-flex justify-content-center mt-5">Tilføj lidt god mad fra menuen.</p>
+        <div class="col-12 col-lg-3 d-none d-lg-block" id="kurv">
+          <div
+            class="container d-flex justify-content-center mt-5 font-weight-bold"
+          >
+            KURV
+          </div>
+          <div
+            class="container d-flex justify-content-center mt-5 font-weight-bold"
+          >
+            FYLD DIN KURV
+          </div>
+          <p class="container d-flex justify-content-center mt-5">
+            Tilføj lidt god mad fra menuen.
+          </p>
         </div>
       </div>
-    </div>
-
-    <div>
-      <footer>
-        <div
-          class="container-fluid d-flex justify-content-around py-1 mb-3 align-items-center"
-          style="height: 25px"
-        >
-          <a href="https://www.facebook.com" target="_blank">
-            <i class="fab fa-facebook fa-2x" style="margin-top: 15px"></i>
-          </a>
-
-          <a href="https://www.youtube.com" target="_blank">
-            <i class="fab fa-youtube fa-2x" style="margin-top: 15px"></i>
-          </a>
-
-          <a href="https://www.instagram.com" target="_blank">
-            <i class="fab fa-instagram fa-2x" style="margin-top: 15px"></i>
-          </a>
-          <a href="https://www.twitter.com" target="_blank">
-            <i class="fab fa-twitter fa-2x" style="margin-top: 15px"></i>
-          </a>
-        </div>
-
-        <!-- Copyright -->
-        <div
-          class="d-flex justify-content-center align-items-center text-center bg-info"
-          style="height: 30px"
-        >
-          © 2023 Copyright:
-        </div>
-      </footer>
     </div>
 
     <!-- jQuery library -->

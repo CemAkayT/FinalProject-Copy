@@ -101,10 +101,13 @@ i.fa-2x {
 }
 .madbox:hover {
   background-color: rgb(232, 229, 229);
+  
 }
 .row-hover {
-  border: 1px solid rgb(241, 230, 230);
+  border: 1px solid rgb(194, 191, 191);
   border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
 }
 
 .row-hover:hover {
@@ -147,5 +150,6 @@ i.fa-2x {
   position: fixed;
   right: 0; /* Adjust the right position as needed */
   z-index: -1;
+  box-shadow: -5px 5px 10px rgba(230, 196, 196, 0.1);
 
 }
