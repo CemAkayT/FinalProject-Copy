@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../static/css/home.css" />
+    <script
+      src="https://kit.fontawesome.com/558b5cad1d.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Just Order</title>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-md navbar-light bg-info fixed-top"
+    >
+      <div class="container-fluid">
+        <a href="{{url_for('home')}}">
+          <i class="fa-solid fa-house fa-2x">
+            <span class="order">Just Order</span>
+          </i>
+        </a>
+
+        <!--toggle button for mobile nav-->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#main-nav"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          aria-label="Toggle Navigation"
+        >
+          <i class="fas fa-hamburger"></i>
+        </button>
+
+        <!-- navbar links -->
+        <div
+          class="collapse navbar-collapse justify-content-end align-center"
+          id="main-nav"
+        >
+          <ul class="navbar-nav">
+            <hr />
+
+            <li class="nav-item pl-4 my-1 mb-md-0">
+              <a
+                class="text"
+                href="https://www.google.com/maps/@55.6538973,12.4875442,18.44z?entry=ttu"
+                target="_blank"
+                >Find os her</a
+              >
+            </li>
+            <hr />
+            <li class="nav-item pl-4 my-1 mb-md-0">
+              <a class="text" href="{{url_for('om')}}"> Om os </a>
+            </li>
+
+            <hr />
+            <li class="nav-item pl-4 my-1 mb-md-0 d-md-none">
+              <a class="text" href="{{url_for('opret')}}"> Opret dig </a>
+            </li>
+            <hr />
+            <li class="nav-item pl-4 my-1 mb-md-0 d-md-none">
+              <a class="text" href="{{url_for('login')}} "> Login </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div
+        class="col-lg-6 col-12 d-flex justify-content-between align-items-center"
+      >
+        <span>
+          <a class="section-link" href="#popular-section">Populær ❤️</a>
+        </span>
+        <span>
+          <a class="section-link" href="#menu-section">Menu</a>
+        </span>
+        <span>
+          <a class="section-link" href="#drinks-section">Drikkevarer</a>
+        </span>
+        <span>
+          <a class="section-link" href="#dip-section">Dips</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row my-5">
+        <div class="col-12 col-lg-9 mt-5">
+          <!-- Sections you want to scroll to -->
+          <section id="popular-section">
+            <div class="container-fluid font-weight-bold mt-5">Populær ❤️</div>
+            <br />
+
+            <div class="container-fluid">
+              <div class="row row-hover">
+                <div class="col-9">
+                  <p class="titel">Bornholmer</p>
+                  <br />
+                  <p class="description">
+                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
+                    hvidløgs dip
+                  </p>
+                  <p class="pris">95,00 kr.</p>
+                </div>
+                <div
+                  class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
+                >
+                  <img
+                    src="/static/images/bornholmer.png"
+                    class="responsive-image"
+                    alt="bornholmer"
+                  />
+                  <button type="button" class="btn px-1 no-bg larger-plus">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="container-fluid">
+              <div class="row row-hover">
+                <div class="col-9">
+                  <p class="titel">Bornholmer</p>
+                  <br />
+                  <p class="description">
+                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
+                    hvidløgs dip
+                  </p>
+                  <p class="pris">95,00 kr.</p>
+                </div>
+                <div
+                  class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
+                >
+                  <img
+                    src="/static/images/bornholmer.png"
+                    class="responsive-image"
+                    alt="bornholmer"
+                  />
+                  <button type="button" class="btn px-1 no-bg larger-plus">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <br />
+
+          <section id="menu-section">
+            <!-- Content for the Menu section -->
+            <!-- ... -->
+          </section>
+
+          <section id="drinks-section">
+            <!-- Content for the Drikkevarer section -->
+            <!-- ... -->
+          </section>
+          <br />
+
+          <section id="dip-section">
+            <div class="container-fluid font-weight-bold">Dips</div>
+            <br />
+            <div class="container-fluid">
+              <div class="row row-hover">
+                <div class="col-9">
+                  <p class="titel">Bornholmer</p>
+                  <br />
+                  <p class="description">
+                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
+                    hvidløgs dip
+                  </p>
+                  <p class="pris">95,00 kr.</p>
+                </div>
+                <div
+                  class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
+                >
+                  <img
+                    src="/static/images/bornholmer.png"
+                    class="responsive-image"
+                    alt="bornholmer"
+                  />
+                  <button type="button" class="btn px-1 no-bg larger-plus">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <br />
+          </section>
+        </div>
+
+        <!--kurv skal laves her-->
+        <div class="col-12 col-lg-3 bg-light d-none d-lg-block" id="kurv"> 
+          <div class="container d-flex justify-content-center mt-5 font-weight-bold">KURV</div>
+          <div class="container d-flex justify-content-center mt-5 font-weight-bold">FYLD DIN KURV</div>
+          <p class="container d-flex justify-content-center mt-5">Tilføj lidt god mad fra menuen.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <footer>
+        <div
+          class="container-fluid d-flex justify-content-around py-1 mb-3 align-items-center"
+          style="height: 25px"
+        >
+          <a href="https://www.facebook.com" target="_blank">
+            <i class="fab fa-facebook fa-2x" style="margin-top: 15px"></i>
+          </a>
+
+          <a href="https://www.youtube.com" target="_blank">
+            <i class="fab fa-youtube fa-2x" style="margin-top: 15px"></i>
+          </a>
+
+          <a href="https://www.instagram.com" target="_blank">
+            <i class="fab fa-instagram fa-2x" style="margin-top: 15px"></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank">
+            <i class="fab fa-twitter fa-2x" style="margin-top: 15px"></i>
+          </a>
+        </div>
+
+        <!-- Copyright -->
+        <div
+          class="d-flex justify-content-center align-items-center text-center bg-info"
+          style="height: 30px"
+        >
+          © 2023 Copyright:
+        </div>
+      </footer>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../static/css/om.css" />
+    <script
+      src="https://kit.fontawesome.com/558b5cad1d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-info fixed-top">
+      <div class="container-fluid">
+        <a href="{{url_for('home')}}">
+          <i class="fa-solid fa-house fa-2x">
+            <span class="order">Just Order</span>
+          </i>
+        </a>
+
+        <!--toggle button for mobile nav-->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#main-nav"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          aria-label="Toggle Navigation"
+        >
+          <i class="fas fa-hamburger"></i>
+        </button>
+
+        <!-- navbar links -->
+        <div
+          class="collapse navbar-collapse justify-content-end align-center"
+          id="main-nav"
+        >
+          <ul class="navbar-nav">
+            <hr />
+
+            <li class="nav-item pl-4 my-1 mb-md-0">
+              <a
+                class="text"
+                href="https://www.google.com/maps/@55.6538973,12.4875442,18.44z?entry=ttu"
+                target="_blank"
+                >Find os her</a
+              >
+            </li>
+            <hr />
+            <li class="nav-item pl-4 my-1 mb-md-0 d-md-none">
+              <a class="text" href="{{url_for('opret')}}"> Opret dig </a>
+            </li>
+            <hr />
+            <li class="nav-item pl-4 my-1 mb-md-0 d-md-none">
+              <a class="text" href="{{url_for('login')}} "> Login </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br />
+
+    <div class="container my-5">
+      <div class="row">
+        <p class="col-6">
+          <span class="text-info">OM</span>
+          <br />
+          <br />
+          Collectia er en førende teknologi-drevet virksomhed, der specialiserer
+          sig i kreditstyring, herunder kreditvurdering, fakturering,
+          inddrivelse af gæld, digitale betalingsløsninger og datamonitorering.
+          Ud over vores hovedkontor i København har vi otte kontorer fordelt på
+          Norge, Sverige, Finland samt Tyskland, hvor vi beskæftiger næsten 300
+          dedikerede medarbejdere og betjener over 20.000 kunder i hele Europa.
+          Vi er en virksomhed med fokus på mennesker i ethvert henseende.
+        </p>
+        <p class="col-6">
+          <br />
+          <br />
+          Vores engagerede medarbejdere er vores mest værdifulde ressource.
+          Medlemmer af Collectia-familien er uddannet efter de højeste
+          standarder og modtager kontinuerlig støtte og uddannelse for at sikre,
+          at debitorer oplever en retfærdig, professionel og respektfuld
+          behandling i deres interaktioner med os. Vi er overbeviste om, at
+          investering i vores medarbejdere er afgørende for at levere den bedst
+          mulige service til både vores kunder og debitorer.
+        </p>
+      </div>
+    </div>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

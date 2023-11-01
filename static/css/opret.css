@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+}
+
+form {
+    background-color: #f7f2ef;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+  font-weight: bolder;
+  color: #1877f2 ;
+
+}
+label{
+  font-weight: 800;
+}
+
+
+
+
+@media (max-width: 600px) {
+  form {
+      width: 95%;
+      height: auto;
+  }
+  footer {
+      width: auto;
+  }
+  i.fa-2x{
+    font-size: 1.25rem;
+  }
+}
+
+
+
+footer{
+  padding-top: 10px;
+  display: flex;
+  background-color: #f7f2ef;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+
+
+.fab.fa-facebook {
+  /* Your styles for the Facebook icon here */
+  color: #1877f2; /* Change the color */
+  
+}
+
+.fab.fa-twitter{
+  color: #1da1f2;
+}
+
+.fab.fa-youtube {
+  /* Your styles for the YouTube icon here */
+  color: #ff0000; /* Change the color */
+}
+
+/* Target the Instagram icon */
+.fab.fa-instagram {
+  /* Your styles for the Instagram icon here */
+  color: #bc2a8d; /* Change the color */
+}
+
+.haveaccount{
+  display: flex;
+  justify-content: end;
+  text-decoration: none;
+  color:rgb(11, 71, 2);  
+}
+.haveaccount:hover{
+  color: #17a2b8;
+}
+
+
+
