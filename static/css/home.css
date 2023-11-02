@@ -68,14 +68,14 @@ i.fa-2x {
 }
 
 
-.col-lg-6{
+.col-lg-8{
   z-index: 999;
   position: fixed;
   background-color: #ffffff;
   height: 50px;
 }
 
-.col-lg-6 a {
+.col-lg-8 a {
   font-weight: 500;
   text-decoration: none;
   color: black;
@@ -91,18 +91,6 @@ i.fa-2x {
   text-decoration: none;
 }
 
-.madbox {
-  height: 130px;
-  width: 100%;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  border: 1px solid rgb(241, 230, 230);
-  border-radius: 10px;
-}
-.madbox:hover {
-  background-color: rgb(232, 229, 229);
-  
-}
 .row-hover {
   border: 1px solid rgb(194, 191, 191);
   border-radius: 10px;
