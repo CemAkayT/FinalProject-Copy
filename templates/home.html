@@ -98,68 +98,61 @@
     <div class="container-fluid">
       <div class="row my-5">
         <div class="col-12 col-lg-9 mt-5">
-          <!-- Sections you want to scroll to -->
-
           <section id="popular-section">
-            <div class="container-fluid font-weight-bold mt-5">Populær ❤️</div>
-            <br />
-
+            <div class="container-fluid font-weight-bold">Populær</div>
             <div class="container-fluid">
+              {% for popular in popular_products %}
+              <br />
               <div class="row row-hover">
+                <br />
                 <div class="col-9">
-                  <p class="titel">Bornholmer</p>
-                  <br />
-                  <p class="description">
-                    Cheddarost icebergsalat, tomat, hjemmesyltet agurkesalat og
-                    hvidløgs dip
-                  </p>
-                  <p class="pris">65,00 kr.</p>
+                  <div class="container-fluid">
+                    <p class="titel">{{ popular[1] }}</p>
+                    <br />
+                    <p class="description">{{ popular[2] }}</p>
+                    <p class="pris">{{ popular[3] }}</p>
+                  </div>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
-                  <img
-                    src="/static/images/bornholmer.png"
-                    class="responsive-image"
-                    alt="bornholmer"
-                  />
+                  <img src="{{ popular[5] }}" class="responsive-image" alt="" />
                   <button type="button" class="btn px-1 no-bg larger-plus">
                     +
                   </button>
                 </div>
               </div>
+              {% endfor %}
             </div>
+            <br />
+            <br />
           </section>
-          <br />
-          <br />
 
           <section id="menu-section">
             <div class="container-fluid font-weight-bold">Menu</div>
-            <br />
             <div class="container-fluid">
+              {% for menu in menu_products %}
+              <br />
               <div class="row row-hover">
+                <br />
                 <div class="col-9">
-                  <p class="titel">Durum menu</p>
-                  <br />
-                  <p class="description">
-                    Hjemmebagt fladbrød med saftigt kød og friske danske
-                    grøntsager
-                  </p>
-                  <p class="pris">75,00 kr.</p>
+                  <div class="container-fluid">
+                    <p class="titel">{{ menu[1] }}</p>
+                    <br />
+                    <p class="description">{{ menu[2] }}</p>
+                    <p class="pris">{{ menu[3] }}</p>
+                  </div>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
-                  <img
-                    src="/static/images/durummenu.jpeg"
-                    class="responsive-image"
-                    alt="bornholmer"
-                  />
+                  <img src="{{ menu[5] }}" class="responsive-image" alt="" />
                   <button type="button" class="btn px-1 no-bg larger-plus">
                     +
                   </button>
                 </div>
               </div>
+              {% endfor %}
             </div>
             <br />
             <br />
@@ -167,28 +160,29 @@
 
           <section id="drinks-section">
             <div class="container-fluid font-weight-bold">Drikkevarer</div>
-            <br />
             <div class="container-fluid">
+              {% for drinks in drinks_products %}
+              <br />
               <div class="row row-hover">
+                <br />
                 <div class="col-9">
-                  <p class="titel">Dåsecola 0,33 L</p>
-                  <br />
-                  <p class="description">Iskold Cola Zero</p>
-                  <p class="pris">10,00 kr.</p>
+                  <div class="container-fluid">
+                    <p class="titel">{{ drinks[1] }}</p>
+                    <br />
+                    <p class="description">{{ drinks[2] }}</p>
+                    <p class="pris">{{ drinks[3] }}</p>
+                  </div>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
-                  <img
-                    src="/static/images/cola.jpeg"
-                    class="responsive-image"
-                    alt="bornholmer"
-                  />
+                  <img src="{{ drinks[5] }}" class="responsive-image" alt="" />
                   <button type="button" class="btn px-1 no-bg larger-plus">
                     +
                   </button>
                 </div>
               </div>
+              {% endfor %}
             </div>
             <br />
             <br />
@@ -196,29 +190,32 @@
 
           <section id="dip-section">
             <div class="container-fluid font-weight-bold">Dips</div>
-            <br />
             <div class="container-fluid">
+              {% for dips in dips_products %}
+              <br />
               <div class="row row-hover">
+                <br />
                 <div class="col-9">
-                  <p class="titel">Spicy Mayo</p>
-                  <br />
-                  <p class="description">Mild krydret chilimayo</p>
-                  <p class="pris">8,00 kr.</p>
+                  <div class="container-fluid">
+                    <p class="titel">{{ dips[1] }}</p>
+                    <br />
+                    <p class="description">{{ dips[2] }}</p>
+                    <p class="pris">{{ dips[3] }}</p>
+                  </div>
                 </div>
                 <div
                   class="col-3 col-xs-none d-flex justify-content-around align-items-center my-2"
                 >
-                  <img
-                    src="/static/images/spicymayo.jpeg"
-                    class="responsive-image"
-                    alt="bornholmer"
-                  />
+                  <img src="{{ dips[5] }}" class="responsive-image" alt="" />
                   <button type="button" class="btn px-1 no-bg larger-plus">
                     +
                   </button>
                 </div>
               </div>
+              {% endfor %}
             </div>
+            <br />
+            <br />
           </section>
         </div>
 

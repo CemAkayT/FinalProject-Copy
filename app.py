@@ -7,7 +7,21 @@ from db import mysql, app
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    # Hent produkter fra databasen baseret på sektion
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM products WHERE section='Populær'")
+    popular_products = cursor.fetchall()
+    
+    cursor.execute("SELECT * FROM products WHERE section='Menu'")
+    menu_products = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM products WHERE section='Drikkevarer'")
+    drinks_products = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM products WHERE section='Dips'")
+    dips_products = cursor.fetchall()
+
+    return render_template('home.html', popular_products=popular_products, menu_products=menu_products, drinks_products=drinks_products, dips_products=dips_products)
 
 
 @app.route("/om/")
