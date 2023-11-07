@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, get_flashed_messages
 from password_validation import is_password_strong
 import bcrypt
 import bleach
@@ -7,6 +7,8 @@ from db import mysql, app
 
 @app.route("/")
 def home():
+    
+    messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM products WHERE section='Populær'")
@@ -21,7 +23,7 @@ def home():
     cursor.execute("SELECT * FROM products WHERE section='Dips'")
     dips_products = cursor.fetchall()
 
-    return render_template('home.html', popular_products=popular_products, menu_products=menu_products, drinks_products=drinks_products, dips_products=dips_products)
+    return render_template('home.html', popular_products=popular_products, menu_products=menu_products, drinks_products=drinks_products, dips_products=dips_products, messages=messages)
 
 
 @app.route("/om/")
@@ -32,7 +34,7 @@ def om():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
+        email = bleach.clean(request.form.get("email"))
         password = request.form.get("password")
 
         cur = mysql.connection.cursor()
@@ -58,9 +60,9 @@ def login():
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
     if request.method == "POST":
-        # santitizing user input with bleach
+        # sanitizing user input with bleach
         email = bleach.clean(request.form.get("email"))
-        password = request.form.get("password")  # .encode("utf-8")
+        password = request.form.get("password")
 
         # user input validation
         if not email or not password:

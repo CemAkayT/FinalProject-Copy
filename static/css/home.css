@@ -138,6 +138,6 @@ i.fa-2x {
   position: fixed;
   right: 0; /* Adjust the right position as needed */
   z-index: -1;
-  box-shadow: -5px 5px 10px rgba(230, 196, 196, 0.1);
+  box-shadow: -30px 5px 10px rgba(230, 196, 196, 0.1);
 
 }

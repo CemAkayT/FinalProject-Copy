@@ -1,12 +1,12 @@
 from db import app, mysql
 
-def insert_product(title, description, price, category, image_path):
+def insert_product(title, description, price, section, image_path):
     try:
         with app.app_context():
             cur = mysql.connection.cursor()
             cur.execute(
-                "INSERT INTO products (title, description, price, category, image_path) VALUES (%s, %s, %s, %s, %s)",
-                (title, description, price, category, image_path),
+                "INSERT INTO products (title, description, price, section, image_path) VALUES (%s, %s, %s, %s, %s)",
+                (title, description, price, section, image_path),
             )
             mysql.connection.commit()
             cur.close()
@@ -17,13 +17,13 @@ def insert_product(title, description, price, category, image_path):
 
 
 if __name__ == "__main__":
-    title = "Fanta"
-    description = "Mexicansk inspireret med jalapeno og guacamole"
-    price = 9.99
-    category = "Drikkevarer"
-    image_path = "/static/images/fanta.jpeg"
+    title = "New Yorker"
+    description = "Amerikansk inspireret med dobbelt ost"
+    price = 79.99
+    section = "Populær"
+    image_path = "/static/images/newyorker.jpeg"
 
-    if insert_product(title, description, price, category, image_path):
+    if insert_product(title, description, price, section, image_path):
         print("Product inserted successfully")
     else:
         print("Failed to insert product")
