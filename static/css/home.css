@@ -67,8 +67,7 @@ i.fa-2x {
   border: none;
 }
 
-
-.col-lg-8{
+.col-lg-8 {
   z-index: 999;
   position: fixed;
   background-color: #ffffff;
@@ -95,7 +94,6 @@ i.fa-2x {
   border: 1px solid rgb(194, 191, 191);
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-
 }
 
 .row-hover:hover {
@@ -109,10 +107,6 @@ i.fa-2x {
 }
 .no-bg {
   background-color: transparent;
-
-  /* Optionally, you can remove the border to make it completely minimal */
-  /* Remove the default focus outline */
-  /* Change the cursor to a pointer on hover */
 }
 
 .larger-plus:hover {
@@ -134,10 +128,21 @@ i.fa-2x {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-#kurv{
+#kurv {
   position: fixed;
   right: 0; /* Adjust the right position as needed */
-  z-index: -1;
+  /* z-index: -1; */
   box-shadow: -30px 5px 10px rgba(230, 196, 196, 0.1);
-
 }
+.kassen {
+  background-color: rgb(244, 114, 8);
+  color: white;
+  font-size: larger;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  height: 100%;
+  width: 100%;
+}
+
