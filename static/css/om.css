@@ -67,6 +67,11 @@ i.fa-2x {
   border: none;
 }
 
+.navbar-nav .nav-item a.text:hover {
+  text-decoration: none;
+  color: #b75934;
+}
+
 .bg-info {
   background-color: #17a2b8 !important;
 }

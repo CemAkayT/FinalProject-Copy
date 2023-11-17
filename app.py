@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, url_for, get_flashed_messages
+from flask import render_template, request, redirect, flash, url_for, get_flashed_messages, session
 from password_validation import is_password_strong
 import bcrypt
 import bleach
@@ -33,8 +33,10 @@ def om():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if request.method == "POST":
         email = bleach.clean(request.form.get("email"))
+        print(session['username'])
         password = request.form.get("password")
 
         cur = mysql.connection.cursor()
@@ -46,7 +48,10 @@ def login():
             if bcrypt.checkpw(
                 password.encode("utf-8"), stored_password.encode("utf-8")
             ):
-                flash("You logged in successfully", "success")
+                stored_user_id = results[0]
+                session['stored_user_id'] = stored_user_id
+                
+                flash(f"Welcome back {results[1]} ", "success")
                 return redirect("/")
             else:
                 flash("Login failed. Please check your credentials.", "danger")
@@ -59,6 +64,7 @@ def login():
 
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
+
     if request.method == "POST":
         # sanitizing user input with bleach
         email = bleach.clean(request.form.get("email"))

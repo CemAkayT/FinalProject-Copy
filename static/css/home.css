@@ -145,6 +145,21 @@ i.fa-2x {
   height: 45px;
   cursor: pointer;
 }
+@media (max-width: 1000px) { /* Adjust the breakpoint as needed */
+  #kassen-button {
+      position: fixed; /* Fix the button to the bottom */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      background-color: #007bff; /* Customize the button's appearance */
+      color: #fff;
+      padding: 10px;
+      z-index: 999; /* Ensure it appears above other content */
+  }
+}
+
+
 .basket-container{
   max-height: 360px; /* Adjust the height as needed */
   overflow-y: auto;  

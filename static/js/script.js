@@ -1,7 +1,6 @@
 function removeCartItem(cartContainer, cartItem) {
-    cartContainer.removeChild(cartItem);
-  }
-
+  cartContainer.removeChild(cartItem);
+}
 
 // Function to add a product to the cart
 function addProductToCart(quantity, title, price) {
