@@ -1,4 +1,12 @@
-from flask import render_template, request, redirect, flash, url_for, get_flashed_messages, session
+from flask import (
+    render_template,
+    request,
+    redirect,
+    flash,
+    url_for,
+    get_flashed_messages,
+    session,
+)
 from password_validation import is_password_strong
 import bcrypt
 import bleach
@@ -7,13 +15,13 @@ from db import mysql, app
 
 @app.route("/")
 def home():
-    
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
+
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM products WHERE section='Populær'")
     popular_products = cursor.fetchall()
-    
+
     cursor.execute("SELECT * FROM products WHERE section='Menu'")
     menu_products = cursor.fetchall()
 
@@ -23,7 +31,14 @@ def home():
     cursor.execute("SELECT * FROM products WHERE section='Dips'")
     dips_products = cursor.fetchall()
 
-    return render_template('home.html', popular_products=popular_products, menu_products=menu_products, drinks_products=drinks_products, dips_products=dips_products, messages=messages)
+    return render_template(
+        "home.html",
+        popular_products=popular_products,
+        menu_products=menu_products,
+        drinks_products=drinks_products,
+        dips_products=dips_products,
+        messages=messages,
+    )
 
 
 @app.route("/om/")
@@ -33,10 +48,9 @@ def om():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-
     if request.method == "POST":
         email = bleach.clean(request.form.get("email"))
-        print(session['username'])
+
         password = request.form.get("password")
 
         cur = mysql.connection.cursor()
@@ -49,8 +63,8 @@ def login():
                 password.encode("utf-8"), stored_password.encode("utf-8")
             ):
                 stored_user_id = results[0]
-                session['stored_user_id'] = stored_user_id
-                
+                session["stored_user_id"] = stored_user_id
+
                 flash(f"Welcome back {results[1]} ", "success")
                 return redirect("/")
             else:
@@ -64,7 +78,6 @@ def login():
 
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
-
     if request.method == "POST":
         # sanitizing user input with bleach
         email = bleach.clean(request.form.get("email"))
@@ -100,7 +113,7 @@ def opret():
         mysql.connection.commit()
         cur.close()
 
-        flash("Registration successful 👍", "success")
+        flash("Du er nu oprettet på siden👍 - Tag et kig på vores menu ", "success")
         return redirect(url_for("home"))
 
     return render_template("opret.html")

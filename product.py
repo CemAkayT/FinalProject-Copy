@@ -1,9 +1,14 @@
 from db import app, mysql
 
+
 def insert_product(title, description, price, section, image_path):
     try:
         with app.app_context():
             cur = mysql.connection.cursor()
+            cur.execute("SET NAMES utf8mb4;")
+            cur.execute("SET CHARACTER SET utf8mb4;")
+       
+            
             cur.execute(
                 "INSERT INTO products (title, description, price, section, image_path) VALUES (%s, %s, %s, %s, %s)",
                 (title, description, price, section, image_path),
@@ -17,9 +22,9 @@ def insert_product(title, description, price, section, image_path):
 
 
 if __name__ == "__main__":
-    title = "New Yorker"
-    description = "Amerikansk inspireret med dobbelt ost"
-    price = 79.99
+    title = "New Yorker "
+    description = "Amerikansk inspireret med double cheeseost"
+    price = 99.99
     section = "Populær"
     image_path = "/static/images/newyorker.jpeg"
 

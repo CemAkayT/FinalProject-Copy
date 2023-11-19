@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -120,7 +117,7 @@
                 <br />
                 <div class="col-9">
                   <div class="container-fluid">
-                    <p class="titel">{{ popular[1] }}</p>
+                    <p class="titel">{{ popular[1]}}</p>
                     <br />
                     <p class="description">{{ popular[2] }}</p>
                     <p class="pris">{{ popular[3] ~ ' kr.' }}</p>
@@ -277,6 +274,7 @@
             </button>
           </div>
         </div>
+        <div class="col-12"></div>
       </div>
     </div>
 
@@ -292,7 +290,7 @@
       $(document).ready(function () {
         setTimeout(function () {
           $("#flash-messages").fadeOut("slow");
-        }, 2000);
+        }, 2500);
       });
     </script>
   </body>
