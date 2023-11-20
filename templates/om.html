@@ -55,13 +55,23 @@
               >
             </li>
             <hr />
-            <li class="nav-item pl-4 my-1 mb-md-0 ">
+            {% if not session.stored_user_id %}
+            <li class="nav-item pl-4 my-1 mb-md-0">
               <a class="text" href="{{url_for('opret')}}"> Opret dig </a>
             </li>
             <hr />
             <li class="nav-item pl-4 my-1 mb-md-0">
-              <a class="text" href="{{url_for('login')}} "> Login </a>
+              <a class="text" href="{{url_for('login')}}"> Login </a>
             </li>
+            <hr />
+            {% else %}
+            <li class="nav-item pl-4 my-1 mb-md-0">
+              <a class="text" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+            <hr />
+            {% endif %}
+
+
           </ul>
         </div>
       </div>
