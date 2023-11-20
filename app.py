@@ -48,8 +48,7 @@ def om():
 
 @app.route("/payment")
 def payment():
-    print(session["stored_user_id"])
-    print("Vi er på  vej til payment siden")
+    print(f'user id {session["stored_user_id"]} is going to payment page')
     return render_template("payment.html")
 
 
@@ -71,7 +70,8 @@ def login():
             ):
                 stored_user_id = results[0]
                 session["stored_user_id"] = stored_user_id
-
+                
+                print(f"user id {stored_user_id} has logged in")
                 flash(f"Welcome back {results[1]} ", "success")
                 return redirect("/")
             else:
@@ -85,6 +85,11 @@ def login():
 
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
+    if "stored_user_id" in session:
+        flash("You are already logged in.", "info")
+        print("Vi har allerede session id")
+        return redirect(url_for("home"))
+
     if request.method == "POST":
         # sanitizing user input with bleach
         email = bleach.clean(request.form.get("email"))
@@ -118,12 +123,31 @@ def opret():
         )
 
         mysql.connection.commit()
+        cur.execute(
+            "SELECT * FROM users WHERE email = %s", [email]
+        )  # Fetch the newly registered user's data
+        new_user = cur.fetchone()
         cur.close()
-
+        session["stored_user_id"] = new_user[0]
+        
+        print(f'user id {new_user[0]} has been created')
         flash("Du er nu oprettet på siden👍 - Tag et kig på vores menu ", "success")
         return redirect(url_for("home"))
 
     return render_template("opret.html")
+
+
+@app.route("/logout")
+def logout():
+    # Retrieve the user's ID before removing it from the session
+    user_id = session.get("stored_user_id")
+
+    # Remove user's session data (stored_user_id)
+    session.pop("stored_user_id", None)
+
+    print(f"user id {user_id} has been logged out")
+    flash("You have been logged out successfully.", "success")
+    return redirect("/")
 
 
 if __name__ == "__main__":

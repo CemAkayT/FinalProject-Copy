@@ -18,7 +18,7 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="text-center text-wrap py-3 text-info">Login👇</h1>
+      <h1 class="text-center text-wrap py-3 mb-5 text-info">Login👇</h1>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %}
       <div class="container mt-2 text-center">
@@ -65,7 +65,7 @@
         </div>
         <div class="mx-5 mb-4 form-check">
           <a class="forgot" href="{{url_for('opret')}}"
-            >Don't have an account yet?</a
+            >Er du ikke kunde endnu?</a
           >
           <br />
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
