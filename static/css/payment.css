@@ -1,3 +1,7 @@
+body {
+  background-image: url("/static/images/bg.png");
+  
+ }
 
 .container {
   margin-top: 25px;
