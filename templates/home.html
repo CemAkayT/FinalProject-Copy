@@ -10,7 +10,9 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+
     <link rel="stylesheet" href="../static/css/home.css" />
+
     <script
       src="https://kit.fontawesome.com/558b5cad1d.js"
       crossorigin="anonymous"
@@ -18,7 +20,7 @@
     <title>Just Order</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-xxl navbar-light bg-info fixed-top">
+    <nav class="navbar navbar-expand-xxxl navbar-light bg-info fixed-top">
       <div class="container-fluid">
         <a href="{{url_for('home')}}">
           <i class="fa-solid fa-house fa-2x">
@@ -265,16 +267,17 @@
           <div class="d-flex flex-wrap justify-content-between my-4">
             <div class="total font-weight-bold">Total</div>
             <div class="mr-2 font-weight-bold" id="netto">0 kr.</div>
-            <button
-              type="button"
+            <a
+              href="/payment"
               class="btn btn-block kassen mt-4"
+              data-bs-toggle="modal"
+              data-bs-target="#paymentModal"
               id="kassen-button"
             >
               Gå til kassen <span id="totalInParentheses"></span>
-            </button>
+            </a>
           </div>
         </div>
-        <div class="col-12"></div>
       </div>
     </div>
 
@@ -282,15 +285,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
+    <!-- Link to Bootstrap JavaScript (required for modal functionality) -->
+
+    <!-- Bootstrap 4 JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script src="/static/js/script.js"></script>
 
     <script>
       $(document).ready(function () {
         setTimeout(function () {
           $("#flash-messages").fadeOut("slow");
-        }, 2500);
+        }, 2000);
       });
     </script>
   </body>

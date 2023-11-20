@@ -46,6 +46,13 @@ def om():
     return render_template("om.html")
 
 
+@app.route("/payment")
+def payment():
+    print(session["stored_user_id"])
+    print("Vi er på  vej til payment siden")
+    return render_template("payment.html")
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
