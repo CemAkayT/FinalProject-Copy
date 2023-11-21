@@ -12,6 +12,10 @@ import bcrypt
 import bleach
 from db import mysql, app
 
+@app.route("/test")
+def test():
+    return render_template('test.html')
+
 
 @app.route("/home")
 def home():
