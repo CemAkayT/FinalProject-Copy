@@ -131,7 +131,7 @@ def opret():
         session["stored_user_id"] = new_user[0]
         
         print(f'user id {new_user[0]} has been created')
-        flash("Du er nu oprettet på siden👍 - Tag et kig på vores menu ", "success")
+        flash("Du er nu oprettet på siden👍 - Tag et kig på vores lækre mad", "success")
         return redirect(url_for("home"))
 
     return render_template("opret.html")
