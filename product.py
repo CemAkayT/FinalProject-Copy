@@ -22,9 +22,9 @@ def insert_product(title, description, price, section, image_path):
 
 
 if __name__ == "__main__":
-    title = "New Yorker "
+    title = "Nyt product i Azure DB "
     description = "Amerikansk inspireret med double cheeseost"
-    price = 99.99
+    price = 199.99
     section = "Populær"
     image_path = "/static/images/newyorker.jpeg"
 

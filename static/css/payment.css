@@ -1,64 +1,57 @@
 body {
-  background-image: url("/static/images/bg.png");
-  
- }
+  background-image: url("/static/images/bg_image.jpg");
+}
 
 .container {
   margin-top: 25px;
   width: 450px;
   border-radius: 15px;
-
 }
 
-
 .order {
-    font-style: italic;
-    color: rgb(244, 114, 8);
-    letter-spacing: 2px;
-  }
-  
-  .fa-solid {
-    color: rgb(244, 114, 8);
-  }
-  .modalkassen {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .companyname {
-    margin-top: 10px;
-  }
-  .paymentinfo {
-    font-size: small;
-    font-weight: 200;
-  }
-  
-  .kortbeskrivelse {
-    margin-left: 15px;
-    font-weight: 500;
-  }
-  .betalingskort {
-    margin-left: 220px;
-    border-radius: 15px;
-   
-  }
-  
-  .krop{
-    background-color: rgb(236, 236, 233);
-    border-radius: 15px;
-  }
-  
-  span{
-    font-size: smaller;
-    font-weight: 300;
-  
-  }
-  .card-body{
-    margin: 13px;
-  }
-  ::placeholder{
-    font-size: smaller;
-    font-weight: 200;
-  }
- 
-  
+  font-style: italic;
+  color: rgb(244, 114, 8);
+  letter-spacing: 2px;
+}
+
+.fa-solid {
+  color: rgb(244, 114, 8);
+}
+.modalkassen {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.companyname {
+  margin-top: 10px;
+}
+.paymentinfo {
+  font-size: small;
+  font-weight: 200;
+}
+
+.kortbeskrivelse {
+  margin-left: 15px;
+  font-weight: 500;
+}
+.betalingskort {
+  margin-left: 220px;
+  border-radius: 15px;
+}
+
+.krop {
+  background-color: rgb(236, 236, 233);
+  border-radius: 15px;
+}
+
+span {
+  font-size: smaller;
+  font-weight: 300;
+}
+.card-body {
+  margin: 13px;
+}
+::placeholder {
+  font-size: smaller;
+  font-weight: 200;
+}
