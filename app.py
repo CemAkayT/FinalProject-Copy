@@ -1,3 +1,4 @@
+
 from flask import (
     render_template,
     request,
@@ -5,12 +6,13 @@ from flask import (
     flash,
     url_for,
     get_flashed_messages,
-    session,
+    session 
 )
 from password_validation import is_password_strong
 import bcrypt
 import bleach
 from db import mysql, app
+
 
 @app.route('/')
 def index():

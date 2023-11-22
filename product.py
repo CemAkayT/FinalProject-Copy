@@ -22,7 +22,7 @@ def insert_product(title, description, price, section, image_path):
 
 
 if __name__ == "__main__":
-    title = "TEST "
+    title = "TEST TEST "
     description = "Amerikansk inspireret med double cheeseost"
     price = 199.99
     section = "Populær"
