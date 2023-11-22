@@ -14,7 +14,7 @@ from db import mysql, app
 
 @app.route('/')
 def index():
-    return '<p> hej fra P tag </p>'
+    return '<p> hej fra P tag. hardcode env </p>'
 
 
 @app.route("/home")
