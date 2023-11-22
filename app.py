@@ -14,12 +14,8 @@ import bleach
 from db import mysql, app
 
 
-@app.route('/')
-def index():
-    return '<p> hej fra P tag. hardcode env </p>'
 
-
-@app.route("/home")
+@app.route("/")
 def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
@@ -79,7 +75,7 @@ def login():
 
                 print(f"user id {stored_user_id} has logged in")
                 flash(f"Welcome back {results[1]} ", "success")
-                return redirect("/home")
+                return redirect("/")
             else:
                 flash("Login failed. Please check your credentials.", "danger")
                 return render_template("login.html")
@@ -153,7 +149,7 @@ def logout():
 
     print(f"user id {user_id} has been logged out")
     flash("You have been logged out successfully.", "success")
-    return redirect("/home")
+    return redirect("/")
 
 
 if __name__ == "__main__":

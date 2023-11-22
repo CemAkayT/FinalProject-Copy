@@ -145,7 +145,7 @@ i.fa-2x {
   height: 45px;
   cursor: pointer;
 }
-@media (max-width: 1168px) {
+@media (max-width: 768px) {
   /* Adjust the breakpoint as needed */
   #kassen-button {
     position: fixed; /* Fix the button to the bottom */
@@ -153,7 +153,7 @@ i.fa-2x {
     right: 0;
     bottom: 0;
     text-align: center;
-    background-color: rgb(36, 172, 9); /* Customize the button's appearance */
+    background-color: rgb(244, 114, 8); /* Customize the button's appearance */
     color: #fff;
     padding: 10px;
     z-index: 999; /* Ensure it appears above other content */
