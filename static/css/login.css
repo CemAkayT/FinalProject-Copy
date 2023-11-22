@@ -1,7 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 body {
   font-family: Arial, sans-serif;
-  margin: 50px;
-  padding: 0;
   background-color: aliceblue;
 }
 
@@ -36,16 +41,6 @@ label {
   }
 }
 
-footer {
-  padding-top: 10px;
-  display: flex;
-  background-color: #f7f2ef;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-}
 
 .fab.fa-facebook {
   /* Your styles for the Facebook icon here */
@@ -82,6 +77,19 @@ button.mx-5 {
 }
 button.btn-info:hover {
   color: rgb(4, 65, 4);
+}
+i.fa-2x {
+  font-size: 1.75rem;
+  color: #b75934; ;
+  
+}
+.loginnav{
+  background-color: #17a2b8;
+  padding-right: 15px;
+  padding-left: 35px;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 

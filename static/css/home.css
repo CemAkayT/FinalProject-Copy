@@ -42,7 +42,7 @@ a i {
 }
 
 a.text {
-  color: black;
+  color: #b75934;
 }
 
 .order {
@@ -145,7 +145,7 @@ i.fa-2x {
   height: 45px;
   cursor: pointer;
 }
-@media (max-width: 768px) {
+@media (max-width: 1010px) {
   /* Adjust the breakpoint as needed */
   #kassen-button {
     position: fixed; /* Fix the button to the bottom */
@@ -156,7 +156,7 @@ i.fa-2x {
     background-color: rgb(244, 114, 8); /* Customize the button's appearance */
     color: #fff;
     padding: 10px;
-    z-index: 999; /* Ensure it appears above other content */
+    /* z-index: 999;  */
   }
 }
 
