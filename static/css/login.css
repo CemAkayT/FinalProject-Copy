@@ -1,12 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
 body {
   font-family: Arial, sans-serif;
+  margin: 50px;
+  padding: 0;
   background-color: aliceblue;
 }
 
@@ -40,7 +35,6 @@ label {
     font-size: 1.25rem;
   }
 }
-
 
 .fab.fa-facebook {
   /* Your styles for the Facebook icon here */
@@ -78,6 +72,3 @@ button.mx-5 {
 button.btn-info:hover {
   color: rgb(4, 65, 4);
 }
-
-
-
