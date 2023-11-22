@@ -12,6 +12,10 @@ import bcrypt
 import bleach
 from db import mysql, app
 
+@app.route('/')
+def index():
+    return '<p> hej fra P tag </p>'
+
 
 @app.route("/home")
 def home():
@@ -70,7 +74,7 @@ def login():
             ):
                 stored_user_id = results[0]
                 session["stored_user_id"] = stored_user_id
-                
+
                 print(f"user id {stored_user_id} has logged in")
                 flash(f"Welcome back {results[1]} ", "success")
                 return redirect("/home")
@@ -129,8 +133,8 @@ def opret():
         new_user = cur.fetchone()
         cur.close()
         session["stored_user_id"] = new_user[0]
-        
-        print(f'user id {new_user[0]} has been created')
+
+        print(f"user id {new_user[0]} has been created")
         flash("Du er nu oprettet på siden👍 - Tag et kig på vores lækre mad", "success")
         return redirect(url_for("home"))
 
