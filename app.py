@@ -15,7 +15,7 @@ from db import mysql, app
 
 
 
-@app.route("/")
+@app.route("/home")
 def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
