@@ -43,7 +43,7 @@ def home():
     )
 
 
-@app.route("/om/")
+@app.route("/om")
 def om():
     return render_template("om.html")
 
