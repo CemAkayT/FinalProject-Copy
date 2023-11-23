@@ -156,7 +156,7 @@ i.fa-2x {
     background-color: rgb(244, 114, 8); /* Customize the button's appearance */
     color: #fff;
     padding: 10px;
-    /* z-index: 999;  */
+    z-index: -999; 
   }
 }
 
