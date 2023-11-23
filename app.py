@@ -15,7 +15,7 @@ from db import mysql, app
 
 
 
-@app.route("/home")
+@app.route("/")
 def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
@@ -74,13 +74,13 @@ def login():
                 session["stored_user_id"] = stored_user_id
 
                 print(f"user id {stored_user_id} has logged in")
-                flash(f"Welcome back {results[1]} ", "success")
+                flash(f"Godt at se dig igen ❤️ {results[1]} ", "success")
                 return redirect(url_for("home"))
             else:
-                flash("Login failed. Please check your credentials.", "danger")
+                flash("Login fejlede. Tjek din login detaljer.", "danger")
                 return render_template("login.html")
         else:
-            flash("There are no records with that email", "warning")
+            flash("Der findes ikke bruger med denne mail", "warning")
 
     return render_template("login.html")
 
@@ -88,7 +88,7 @@ def login():
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
     if "stored_user_id" in session:
-        flash("You are already logged in.", "info")
+        flash("Du er allered logget ind.", "info")
         print("Vi har allerede session id")
         return redirect(url_for("home"))
 
@@ -103,7 +103,7 @@ def opret():
 
         if not is_password_strong(password):
             flash(
-                "Password must be at least 8 characters long, contain at least a digit, an uppercase letter, a lowercase letter and a special character ",
+                "Adgangskode skal være på mindst 8 tegn, indeholde mindst et ciffer, et stort bogstav, et lille bogstav og et specialtegn",
                 "danger",
             )
             return render_template("opret.html")
@@ -117,7 +117,7 @@ def opret():
         cur.execute("SELECT * FROM users WHERE email = %s", [email])
         result = cur.fetchone()
         if result:
-            flash("Email already taken ⛔️", "danger")
+            flash("Email er desværre allerede taget 😩", "warning")
             return render_template("opret.html")
         cur.execute(
             "INSERT INTO users(email,password, created_at)VALUES(%s, %s, NOW())",
@@ -133,7 +133,7 @@ def opret():
         session["stored_user_id"] = new_user[0]
 
         print(f"user id {new_user[0]} has been created")
-        flash("Du er nu oprettet på siden👍 - Tag et kig på vores lækre mad", "success")
+        flash(f"Du er nu oprettet på siden som {new_user[1]}👍 - Tag et kig på vores lækre mad", "success")
         return redirect(url_for("home"))
 
     return render_template("opret.html")
@@ -148,7 +148,7 @@ def logout():
     session.pop("stored_user_id", None)
 
     print(f"user id {user_id} has been logged out")
-    flash("You have been logged out successfully.", "success")
+    flash("Du er blevet logget ud.", "success")
     return redirect(url_for ("home"))
 
 
