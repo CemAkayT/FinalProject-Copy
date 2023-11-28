@@ -109,6 +109,8 @@ function updateTotalPrice() {
   });
 
   nettoPrisElement.textContent = total.toFixed(2) + " kr.";
+  // Store the total value in localStorage
+  sessionStorage.setItem("nettoAmount", total.toFixed(2) + " kr.");
 
   // Update the total in parentheses
   updateTotalInParentheses();
@@ -119,6 +121,7 @@ function updateTotalInParentheses() {
   const nettoPrisElement = document.getElementById("netto");
   const nettoPrice = parseFloat(nettoPrisElement.innerText.replace(" kr.", ""));
   totalInParentheses.textContent = `(${nettoPrice.toFixed(2)} kr.)`;
+
 }
 
 // Example: Handle the click event for the "+" button to add a product

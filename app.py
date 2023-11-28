@@ -1,4 +1,3 @@
-
 from flask import (
     render_template,
     request,
@@ -6,13 +5,20 @@ from flask import (
     flash,
     url_for,
     get_flashed_messages,
-    session 
+    session
 )
+
 from password_validation import is_password_strong
-import bcrypt
+import bcrypt, os, stripe
 import bleach
 from db import mysql, app
 
+stripe_keys = {
+    "secret_key": os.getenv("STRIPE_SECRET_KEY"),
+    "publishable_key": os.getenv("STRIPE_PUBLISHABLE_KEY"),
+}
+
+stripe.api_key = stripe_keys["secret_key"]
 
 
 @app.route("/")
@@ -48,10 +54,35 @@ def om():
     return render_template("om.html")
 
 
-@app.route("/payment")
-def payment():
-    print(f'user id {session["stored_user_id"]} is going to payment page')
-    return render_template("payment.html")
+@app.route("/checkout")
+def checkout():
+    return render_template("checkout.html", key=stripe_keys["publishable_key"])
+
+
+@app.route("/charge", methods=["POST"])
+def charge():
+    
+    text = request.form.get("belob")     
+    print(text)
+    amount = text
+    try:
+        
+        customer = stripe.Customer.create(
+            email="customer@example.com", source=request.form["stripeToken"]
+        )
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=amount,
+            currency="dkk",
+            description="Flask Charge",
+        )
+
+        # Pass the amount to the template
+        return render_template("charge.html", charge=charge, amount=amount)
+    except stripe.error.StripeError as e:
+        # Handle Stripe errors and return an error message to the user
+        app.logger.error(f"Stripe error: {str(e)}")
+        return "Der skete en fejl under betaling. Prøv igen senere."
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -120,7 +151,7 @@ def opret():
             flash("Email er desværre allerede taget 😩", "warning")
             return render_template("opret.html")
         cur.execute(
-            "INSERT INTO users(email,password, created_at)VALUES(%s, %s, NOW())",
+            "INSERT INTO users(email, password, created_at) VALUES (%s, %s, DATE_ADD(NOW(), INTERVAL 1 HOUR))",
             (email, hashed_pw),
         )
 
@@ -133,7 +164,10 @@ def opret():
         session["stored_user_id"] = new_user[0]
 
         print(f"user id {new_user[0]} has been created")
-        flash(f"Du er nu oprettet på siden som {new_user[1]}👍 - Tag et kig på vores lækre mad", "success")
+        flash(
+            f"Du er nu oprettet på siden som {new_user[1]}👍 - Tag et kig på vores lækre mad"
+        )
+
         return redirect(url_for("home"))
 
     return render_template("opret.html")
@@ -149,7 +183,14 @@ def logout():
 
     print(f"user id {user_id} has been logged out")
     flash("Du er blevet logget ud.", "success")
-    return redirect(url_for ("home"))
+    return redirect(url_for("home"))
+
+
+@app.route("/session")
+def view_session():
+    # Access and print the entire session
+    session_data = dict(session)
+    return str(session_data)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stripe Payment</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <style type="text/css">
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #28a0e5;
+    }
+  </style>
+
+  <body>
+    <h2 >
+      Du bliver videreført til sikker betaling efter du har trykket på 'Pay with
+      Card' knappen
+    </h2>
+    <form action="/charge" method="post">
+      <article>
+        <label for="checkout_total">Til betaling: DKK </label>
+        <span id="netto_amount"></span>
+        <input type="text" name="belob" id="belob" style="display: none" />
+      </article>
+
+      <script
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="{{ key }}"
+        data-description="Sikker betaling med Stripe"
+        data-amount="{{numericValue}}"
+        data-currency="dkk"
+      ></script>
+    </form>
+
+    <script>
+      // Retrieve the 'nettoAmount' value from sessionStorage
+      var nettoValue = sessionStorage.getItem("nettoAmount");
+      var nettoAmountElement = document.getElementById("netto_amount");
+      var inpbelob = document.getElementById("belob");
+      console.log("inp beløb");
+      console.log(inpbelob);
+      console.log(nettoValue);
+      console.log(netto_amount);
+
+      // Check if the value exists before logging it
+      if (nettoValue !== null) {
+        // Convert retrieved string to a numeric
+        var numericValue = parseFloat(nettoValue);
+        numericValue = numericValue * 100; // vigtigt betaling sker i cents
+        inpbelob.value = numericValue;
+
+        // Update the content of the <span> with the numeric value
+        var numDivision = numericValue / 100;
+        nettoAmountElement.textContent = numDivision.toFixed(2); // Format the value as needed
+        console.log("Value is", numericValue);
+      } else {
+        console.log("Value not found in sessionStorage");
+      }
+    </script>
+  </body>
+</html>

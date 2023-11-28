@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bekræftelse</title>
+  </head>
+
+  <style type="text/css">
+    body {
+      margin-top: 40px;
+      background-image: url("/static/images/background_image.jpg");
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+  </style>
+
+  <body>
+    <h1>Besked fra Just Order:</h1>
+    <h2>Du har betalt: <span id="nettoValue"></span></h2>
+    <h3>Tak for din bestilling. Du kan nu lukke denne side!</h3>
+  </body>
+  <script>
+    // Retrieve the 'nettoAmount' value from sessionStorage
+    var nettoValue = sessionStorage.getItem("nettoAmount");
+
+    // Get a reference to the <span> element inside <h2>
+    var nettoValueElement = document.getElementById("nettoValue");
+
+    // Check if the value exists before displaying it
+    if (nettoValue !== null) {
+      // Set the text content of the <span> to the retrieved value
+      nettoValueElement.textContent = nettoValue;
+      console.log(nettoValue);
+    }
+  </script>
+</html>

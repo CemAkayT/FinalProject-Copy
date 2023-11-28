@@ -46,8 +46,8 @@
           class="collapse navbar-collapse justify-content-end align-center"
           id="main-nav"
         >
-          <ul class="navbar-nav">          
-            <hr>
+          <ul class="navbar-nav">
+            <hr />
             <li class="nav-item pl-4 my-1 mb-md-0">
               <a
                 class="text"
@@ -275,7 +275,7 @@
             <div class="total font-weight-bold">Total</div>
             <div class="mr-2 font-weight-bold" id="netto">0 kr.</div>
             <a
-              href="/payment"
+              href="/checkout"
               class="btn btn-block kassen mt-4"
               data-bs-toggle="modal"
               data-bs-target="#paymentModal"
@@ -293,18 +293,24 @@
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- Link to Bootstrap JavaScript (required for modal functionality) -->
-
     <!-- Bootstrap 4 JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <script src="/static/js/script.js"></script>
 
     <script>
       $(document).ready(function () {
         setTimeout(function () {
           $("#flash-messages").fadeOut("slow");
-        }, 2000);
+        }, 3000);
       });
+    </script>
+
+    <!-- JavaScript code to retrieve and store the 'netto' value -->
+    <script>
+      // In home.html, retrieve the 'netto' value from the 'netto' element
+      var nettoValue = document.getElementById("netto").textContent.trim();
+      sessionStorage.setItem("nettoAmount", nettoValue);
+
     </script>
   </body>
 </html>
