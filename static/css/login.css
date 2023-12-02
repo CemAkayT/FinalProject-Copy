@@ -72,3 +72,7 @@ button.mx-5 {
 button.btn-info:hover {
   color: rgb(4, 65, 4);
 }
+.form-control::placeholder {
+  font-size: smaller;
+
+}

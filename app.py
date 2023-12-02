@@ -61,6 +61,13 @@ def checkout():
 
 @app.route("/charge", methods=["POST"])
 def charge():
+    userid = session.get("stored_user_id")
+    print(userid)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM users WHERE user_id = %s", [userid])
+    results = cur.fetchone()
+    print(results)
+    
     
     text = request.form.get("belob")     
     print(text)
@@ -68,7 +75,7 @@ def charge():
     try:
         
         customer = stripe.Customer.create(
-            email="customer@example.com", source=request.form["stripeToken"]
+            email=results[1], source=request.form["stripeToken"]
         )
         charge = stripe.Charge.create(
             customer=customer.id,
@@ -76,13 +83,20 @@ def charge():
             currency="dkk",
             description="Flask Charge",
         )
+        
+
+        query =  "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`) VALUES ('POPSI', '7', '7',DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s)"
+        cur.execute(query, (userid,))   
+        mysql.connection.commit()
+                
 
         # Pass the amount to the template
         return render_template("charge.html", charge=charge, amount=amount)
     except stripe.error.StripeError as e:
         # Handle Stripe errors and return an error message to the user
         app.logger.error(f"Stripe error: {str(e)}")
-        return "Der skete en fejl under betaling. Prøv igen senere."
+        return f"Stripe error: {str(e)}"
+    
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -163,7 +177,7 @@ def opret():
         cur.close()
         session["stored_user_id"] = new_user[0]
 
-        print(f"user id {new_user[0]} has been created")
+        print(f"user id {new_user[0]} has been created with email: {new_user[1]}")
         flash(
             f"Du er nu oprettet på siden som {new_user[1]}👍 - Tag et kig på vores lækre mad"
         )

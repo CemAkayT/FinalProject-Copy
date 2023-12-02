@@ -6,43 +6,37 @@ body {
 }
 
 form {
-    background-color: #f7f2ef;
-    padding: 20px;
-    border-radius: 8px;
-    width: 500px;
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f7f2ef;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1{
+h1 {
   font-weight: bolder;
-  color: #1877f2 ;
-
+  color: #1877f2;
 }
-label{
+label {
   font-weight: 200;
-  color: #b75934;;
+  color: #b75934;
 }
-
-
-
 
 @media (max-width: 600px) {
   form {
-      width: 95%;
-      height: auto;
+    width: 95%;
+    height: auto;
   }
   footer {
-      width: auto;
+    width: auto;
   }
-  i.fa-2x{
+  i.fa-2x {
     font-size: 1.25rem;
   }
 }
 
-
-
-footer{
+footer {
   padding-top: 10px;
   display: flex;
   background-color: #f7f2ef;
@@ -53,14 +47,12 @@ footer{
   height: 50px;
 }
 
-
 .fab.fa-facebook {
   /* Your styles for the Facebook icon here */
   color: #1877f2; /* Change the color */
-  
 }
 
-.fab.fa-twitter{
+.fab.fa-twitter {
   color: #1da1f2;
 }
 
@@ -75,13 +67,13 @@ footer{
   color: #bc2a8d; /* Change the color */
 }
 
-.haveaccount{
+.haveaccount {
   display: flex;
   justify-content: end;
   text-decoration: none;
-  color: #b75934; 
+  color: #b75934;
 }
-.haveaccount:hover{
+.haveaccount:hover {
   color: #17a2b8;
 }
 button.mx-5 {
@@ -91,3 +83,6 @@ button.btn-info:hover {
   color: rgb(4, 65, 4);
 }
 
+.form-control::placeholder {
+  font-size:smaller
+}

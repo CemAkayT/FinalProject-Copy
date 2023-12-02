@@ -16,8 +16,8 @@ function addProductToCart(quantity, title, price) {
 
   cartItem.innerHTML = `
               <div class="d-flex justify-content-between my-4">
-              <div class="cart-quanity font-weight-bold">${currentQuantity}</div>
-              <div class="cart-title font-weight-bold">${title}</div>
+              <div class="cart-quanity">${currentQuantity}</div>
+              <div class="cart-title">${title}</div>
               <div class="cart-price mr-2">${currentPrice.toFixed(2)} kr.</div>
               </div> 
               
@@ -92,6 +92,7 @@ function addProductToCart(quantity, title, price) {
         cartItemCountElement.textContent = currentCount - 1;
       }
     }
+    sessionStorage.setItem("quantity", cartItemCountElement.textContent);
   }
 }
 
@@ -121,7 +122,6 @@ function updateTotalInParentheses() {
   const nettoPrisElement = document.getElementById("netto");
   const nettoPrice = parseFloat(nettoPrisElement.innerText.replace(" kr.", ""));
   totalInParentheses.textContent = `(${nettoPrice.toFixed(2)} kr.)`;
-
 }
 
 // Example: Handle the click event for the "+" button to add a product

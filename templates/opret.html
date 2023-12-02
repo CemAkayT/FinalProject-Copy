@@ -44,6 +44,7 @@
           <label for="exampleInputEmail1" class="form-label">Email</label>
           <input
             type="email"
+            placeholder="Indtast din email"
             required
             class="form-control"
             id="exampleInputEmail1"
@@ -56,6 +57,7 @@
           <label for="exampleInputPassword1" class="form-label">Password</label>
           <input
             type="password"
+            placeholder="Adgangskode"
             required
             minlength="8"
             class="form-control"
@@ -64,9 +66,7 @@
           />
         </div>
         <div class="mx-5 mb-4 form-check">
-          <a class="haveaccount" href="{{url_for('login')}}"
-            >Allerede kunde?</a
-          >
+          <a class="haveaccount" href="{{url_for('login')}}">Allerede kunde?</a>
           <br />
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
           <label class="form-check-label" for="exampleCheck1">Husk mig</label>
@@ -113,5 +113,3 @@
     </script>
   </body>
 </html>
-
-
