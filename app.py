@@ -5,7 +5,7 @@ from flask import (
     flash,
     url_for,
     get_flashed_messages,
-    session
+    session,
 )
 
 from password_validation import is_password_strong
@@ -22,6 +22,11 @@ stripe.api_key = stripe_keys["secret_key"]
 
 
 @app.route("/")
+def forside():
+    return render_template("forside.html")
+
+
+@app.route("/home")
 def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
@@ -62,18 +67,15 @@ def checkout():
 @app.route("/charge", methods=["POST"])
 def charge():
     userid = session.get("stored_user_id")
-    print(userid)
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM users WHERE user_id = %s", [userid])
     results = cur.fetchone()
     print(results)
-    
-    
-    text = request.form.get("belob")     
+
+    text = request.form.get("belob")
     print(text)
     amount = text
     try:
-        
         customer = stripe.Customer.create(
             email=results[1], source=request.form["stripeToken"]
         )
@@ -83,12 +85,10 @@ def charge():
             currency="dkk",
             description="Flask Charge",
         )
-        
 
-        query =  "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`) VALUES ('POPSI', '7', '7',DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s)"
-        cur.execute(query, (userid,))   
+        query = "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`) VALUES ('qq', 1, 4, DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s)"
+        cur.execute(query, (userid,))
         mysql.connection.commit()
-                
 
         # Pass the amount to the template
         return render_template("charge.html", charge=charge, amount=amount)
@@ -96,7 +96,6 @@ def charge():
         # Handle Stripe errors and return an error message to the user
         app.logger.error(f"Stripe error: {str(e)}")
         return f"Stripe error: {str(e)}"
-    
 
 
 @app.route("/login", methods=["GET", "POST"])

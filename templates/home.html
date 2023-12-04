@@ -17,6 +17,7 @@
       src="https://kit.fontawesome.com/558b5cad1d.js"
       crossorigin="anonymous"
     ></script>
+
     <title>Just Order</title>
   </head>
   <body>
@@ -296,7 +297,8 @@
     <!-- Bootstrap 4 JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="/static/js/script.js"></script>
-    <script src="/static/js/insert_to_db.js"></script>
+    <script src="/static/js/addProductToCart.js"></script>
+    <script src="/static/js/updateTotalPrice.js"></script>
 
     <script>
       $(document).ready(function () {
@@ -312,5 +314,6 @@
       var nettoValue = document.getElementById("netto").textContent.trim();
       sessionStorage.setItem("nettoAmount", nettoValue);
     </script>
+    <!-- <script src="/static/js/insert_to_db.js"></script> -->
   </body>
 </html>
