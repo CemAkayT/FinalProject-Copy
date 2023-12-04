@@ -43,27 +43,24 @@ function addProductToCart(quantity, title, price) {
   // Add click event listeners to the buttons for this specific cart item
   incrementButton.addEventListener("click", () => {
     currentQuantity++;
+    cartQuantityElement.textContent = currentQuantity;
     quantityElement.textContent = currentQuantity;
     updateCartItemPrice();
     updateCartItemCount(true); // Increment the count
-    cartQuantityElement.textContent = currentQuantity;
-
   });
 
   decrementButton.addEventListener("click", () => {
     if (currentQuantity > 0) {
       currentQuantity--;
       quantityElement.textContent = currentQuantity;
+      cartQuantityElement.textContent = currentQuantity;
       updateCartItemPrice();
       updateCartItemCount(false); // Decrement the count
-      cartQuantityElement.textContent = currentQuantity;
 
       if (currentQuantity === 0) {
         cartContainer.removeChild(cartItem); // Remove the item from the cart if count reaches 0
-        removeOrderFromArray(currentQuantity, title, price);
       }
     }
-    console.log("Vi trækker et produkt fra array", orders);
   });
 
   // Function to update the displayed quantity for this specific cart item
@@ -71,7 +68,6 @@ function addProductToCart(quantity, title, price) {
     const cartPriceElement = cartItem.querySelector(".cart-price");
     currentPrice = currentQuantity * parseFloat(price.replace(" kr.", ""));
     cartPriceElement.textContent = currentPrice.toFixed(2) + " kr.";
-    //herefter virker 1000 separatoren ikke
     updateTotalPrice();
   }
 
@@ -96,10 +92,4 @@ function addProductToCart(quantity, title, price) {
     }
     sessionStorage.setItem("quantity", cartItemCountElement.textContent);
   }
-
-  console.log("Vi har tilføjet et nyt produkt til array:", orders);
 }
-// Her slutter addProductToCart()
-
-
-

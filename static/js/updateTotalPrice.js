@@ -3,12 +3,24 @@ function updateTotalPrice() {
   const cartItems = document.querySelectorAll(".cart-item");
   let total = 0;
 
+  let orders = [];
+
   cartItems.forEach((item) => {
+    let order = {};
     const itemPrice = parseFloat(
       item.querySelector(".cart-price").textContent.replace(" kr.", "")
     );
+
+    order.qnty = item.querySelector(".cart-quanity").textContent;
+    order.title = item.querySelector(".cart-title").textContent;
+
     total += itemPrice;
+    order.price = itemPrice;
+    orders.push(order);
   });
+
+  JSON.stringify(orders);
+  console.log("Orders", orders);
 
   nettoPrisElement.textContent = total.toFixed(2) + " kr.";
 
