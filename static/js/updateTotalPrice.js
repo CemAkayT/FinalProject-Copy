@@ -19,8 +19,10 @@ function updateTotalPrice() {
     orders.push(order);
   });
 
-  JSON.stringify(orders);
+  let orderJSON = JSON.stringify(orders);
   console.log("Orders", orders);
+
+  sessionStorage.setItem("orderJSON", orderJSON)
 
   nettoPrisElement.textContent = total.toFixed(2) + " kr.";
 

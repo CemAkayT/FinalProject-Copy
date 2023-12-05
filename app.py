@@ -1,3 +1,4 @@
+import json
 from flask import (
     render_template,
     request,
@@ -70,11 +71,18 @@ def charge():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM users WHERE user_id = %s", [userid])
     results = cur.fetchone()
-    print(results)
 
-    text = request.form.get("belob")
-    print(text)
-    amount = text
+    paid_amount = request.form.get("amountdue")
+    amount = paid_amount
+
+    orderJSON = request.form.get("orders")
+    parsedJSON = json.loads(orderJSON)
+    print(orderJSON)
+    print("Order fra array")
+
+    for order in parsedJSON:
+        print(order)
+
     try:
         customer = stripe.Customer.create(
             email=results[1], source=request.form["stripeToken"]
@@ -86,9 +94,16 @@ def charge():
             description="Flask Charge",
         )
 
-        query = "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`) VALUES ('qq', 1, 4, DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s)"
-        cur.execute(query, (userid,))
-        mysql.connection.commit()
+        # print(charge) viser hvad man kan bruge i koden fra charge
+        # parsedCharge = json.loads(charge). Charge er allerede Pythin dictionary
+        print(charge["id"])
+        print(charge)
+        paymentID = charge["id"]
+        
+        for order in parsedJSON:
+            query = "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`, `payment_id`) VALUES (%s, %s, %s, DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s, %s)"
+            cur.execute(query, (order["title"],order["qnty"], order["price"], userid, paymentID))
+            mysql.connection.commit()
 
         # Pass the amount to the template
         return render_template("charge.html", charge=charge, amount=amount)
