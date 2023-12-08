@@ -13,11 +13,12 @@ footer {
   height: 70px;
 }
 a i {
-  color: #b75934;
+  color: #ff8000;
 }
 
+
 .fas.fa-hamburger {
-  color: #b75934;
+  color: #ff8000;
 }
 
 .fab.fa-facebook {
@@ -42,7 +43,7 @@ a i {
 }
 
 a.text {
-  color: #b75934;
+  color: #ff8000;
 }
 
 .order {
@@ -135,7 +136,7 @@ i.fa-2x {
   box-shadow: -30px 5px 10px rgba(230, 196, 196, 0.1);
 }
 .kassen {
-  background-color: rgb(244, 114, 8);
+  background-color: #ff8000;
   color: white;
   font-size: larger;
   border-top-left-radius: 25px;
@@ -153,7 +154,7 @@ i.fa-2x {
     right: 0;
     bottom: 0;
     text-align: center;
-    background-color: rgb(244, 114, 8); /* Customize the button's appearance */
+    background-color: #ff8000; /* Customize the button's appearance */
     color: #fff;
     padding: 10px;
     z-index: -999; 
