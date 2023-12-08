@@ -33,9 +33,8 @@
       <article>
         <label for="checkout_total">Til betaling: DKK </label>
         <span id="netto_amount"></span>
-        <input type="hidden" name="amountdue" id="amountdue"  /> 
-        <input type="text" name="orders" id="orders" >
-        <!-- <input type="hidden" name="orders" id="orders" /> -->
+        <input type="hidden" name="amountdue" id="amountdue" />
+        <input type="hidden" name="orders" id="orders" />
       </article>
 
       <script
@@ -51,15 +50,14 @@
     <script>
       // Retrieve the 'nettoAmount' value and orders from sessionStorage
       const nettoValue = sessionStorage.getItem("nettoAmount");
-      const orderJSON = sessionStorage.getItem("orderJSON");
+      const orderJSON = sessionStorage.getItem("orderJSON"); // sessionStorage sat i updateTotalPrice.js linje 25
+
       const nettoAmountElement = document.getElementById("netto_amount");
+
       const input_field_value = document.getElementById("amountdue");
       const input_field_orders = document.getElementById("orders");
-      input_field_orders.value = orderJSON
-      console.log("inp beløb");
-      console.log(input_field_value);
-      console.log(nettoValue);
-      console.log(netto_amount);
+
+      input_field_orders.value = orderJSON;
 
       // Check if the value exists before logging it
       if (nettoValue !== null) {

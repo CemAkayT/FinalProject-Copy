@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 50px;
   padding: 0;
   background-color: aliceblue;
 }
@@ -9,7 +8,7 @@ form {
   background-color: #f7f2ef;
   padding: 20px;
   border-radius: 8px;
-  width: 500px;
+  width: 450px;
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -20,7 +19,7 @@ h1 {
 }
 label {
   font-weight: 200;
-  color: #b75934;
+  color: #ff8000;
 }
 
 @media (max-width: 600px) {
@@ -60,14 +59,14 @@ label {
   display: flex;
   justify-content: end;
   text-decoration: none;
-  color: #b75934;
+  color: #ff8000;
 }
 .forgot:hover {
   color: #17a2b8;
 }
 
 button.mx-5 {
-  color: #b75934;
+  color: #ff8000;
 }
 button.btn-info:hover {
   color: rgb(4, 65, 4);
