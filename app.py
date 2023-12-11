@@ -122,7 +122,8 @@ def charge():
         current_time = time.time()
 
         # Calculate the time 30 minutes from now (30 minutes * 60 seconds per minute)
-        delivery_time = current_time + 30 * 60
+        # 90 instead of 30 because on Azure time is one hour less
+        delivery_time = current_time + 90 * 60
 
         # Convert the delivery_time back to a human-readable format (e.g., HH:MM)
         delivery_time_formatted = time.strftime("%H:%M", time.localtime(delivery_time))
