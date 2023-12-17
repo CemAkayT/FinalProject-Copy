@@ -4,36 +4,17 @@
   box-sizing: border-box;
 }
 
-footer {
-  background-color: #f7f2ef;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-}
 a i {
   color: #ff8000;
+  text-decoration: none;
+  
+}
+a{
+  text-decoration: none;
 }
 
 .fas.fa-hamburger {
   color: #ff8000;
-}
-
-.fab.fa-facebook {
-  color: #1877f2;
-}
-
-.fab.fa-twitter {
-  color: #1da1f2;
-}
-
-.fab.fa-youtube {
-  color: #ff0000;
-}
-
-.fab.fa-instagram {
-  color: #bc2a8d;
 }
 
 a.text:hover {
@@ -51,9 +32,6 @@ a.text {
   letter-spacing: 2px;
 }
 
-i.fa-2x {
-  font-size: 1.75rem;
-}
 
 @media (max-width: 600px) {
   span.order {
@@ -63,19 +41,20 @@ i.fa-2x {
     font-size: 1.25rem;
   }
 }
-.navbar-toggler {
-  border: none;
-}
 
-.navbar-nav .nav-item a.text:hover {
+.kontaktemail, .kontaktphone{
+  color: black;
   text-decoration: none;
-  color: #ff8000;
 }
 
 .bg-info {
   background-color: #17a2b8 !important;
 }
 
-.om{
+.navbar-toggler {
+  border: none;
+}
+.navbar-nav .nav-item a.text:hover {
+  text-decoration: none;
   color: #ff8000;
 }

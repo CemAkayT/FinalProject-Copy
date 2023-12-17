@@ -1,18 +1,15 @@
-body {
-  font-family: Arial, sans-serif;
- 
+* {
+  margin: 0;
   padding: 0;
-  background-color: aliceblue;
+  box-sizing: border-box;
 }
 
 form {
-  background-color: #f7f2ef;
   padding: 20px;
   border-radius: 8px;
   width: 450px;
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
 }
 
 h1 {
@@ -29,6 +26,9 @@ label {
     width: 95%;
     height: auto;
   }
+  span.order {
+    font-size: 15px;
+  }
   footer {
     width: auto;
   }
@@ -37,53 +37,52 @@ label {
   }
 }
 
-footer {
-  padding-top: 10px;
-  display: flex;
-  background-color: #f7f2ef;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-}
-
-.fab.fa-facebook {
-  /* Your styles for the Facebook icon here */
-  color: #1877f2; /* Change the color */
-}
-
-.fab.fa-twitter {
-  color: #1da1f2;
-}
-
-.fab.fa-youtube {
-  /* Your styles for the YouTube icon here */
-  color: #ff0000; /* Change the color */
-}
-
-/* Target the Instagram icon */
-.fab.fa-instagram {
-  /* Your styles for the Instagram icon here */
-  color: #bc2a8d; /* Change the color */
-}
-
 .haveaccount {
   display: flex;
+  font-weight: 200;
   justify-content: end;
   text-decoration: none;
   color: #ff8000;
 }
-.haveaccount:hover {
-  color: #17a2b8;
-}
-button.mx-5 {
-  color: #ff8000;
-}
-button.btn-info:hover {
-  color: rgb(4, 65, 4);
-}
 
 .form-control::placeholder {
-  font-size:smaller
+  font-size: small;
+}
+a i {
+  color: #ff8000;
+  text-decoration: none;
+
+}
+.fas.fa-hamburger {
+  color: #ff8000;
+}
+
+.order {
+  font-size: 22px;
+  font-style: italic;
+  letter-spacing: 2px;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+.navbar-toggler {
+  border: none;
+}
+a.text{
+  text-decoration: none;
+  color: #ff8000;
+}
+
+.btnknap{
+  height: 40px;
+  width: 130px;
+  background-color: #ff8000;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border: none;
+  color: white;
 }

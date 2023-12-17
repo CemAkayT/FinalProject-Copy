@@ -3,10 +3,11 @@ function updateTotalPrice() {
   const cartItems = document.querySelectorAll(".cart-item");
   let total = 0;
 
-  let orders = [];
+  let orders = []; // JavaScript array
 
+  // bygger JSON op med alle produkter i kurven
   cartItems.forEach((item) => {
-    let order = {};
+    let order = {}; // opretter et JavaScript objekt for hvert produkt
     const itemPrice = parseFloat(
       item.querySelector(".cart-price").textContent.replace(" kr.", "")
     );
@@ -18,10 +19,9 @@ function updateTotalPrice() {
     order.price = itemPrice;
     orders.push(order);
   });
-
-  let orderJSON = JSON.stringify(orders);
-  console.log("Orders", orders);
-
+  //orders er nu et array af JavaScript objekter
+  let orderJSON = JSON.stringify(orders); // Vi laver nu JavaScript arrayet objekterne om til JSON streng
+  // Vi gemmer JSON i session storage til senere brug i checkout skjult input felt
   sessionStorage.setItem("orderJSON", orderJSON);
 
   nettoPrisElement.textContent = total.toFixed(2) + " kr.";

@@ -9,15 +9,16 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../static/css/kontakt.css" />
+    <link rel="stylesheet" href="../static/css/aabningstider.css" />
     <script
       src="https://kit.fontawesome.com/558b5cad1d.js"
       crossorigin="anonymous"
     ></script>
-    <title>Kontakt</title>
+    <link rel="icon" type="image.png" href="/static/images/logo.png" />
+    <title>Åbningstider</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-xxxl navbar-light bg-info fixed-top">
+    <nav class="navbar navbar-expand-xxxl bg-info fixed-top">
       <div class="container-fluid">
         <a href="{{url_for('home')}}">
           <i class="fa-solid fa-house fa-2x">
@@ -39,10 +40,7 @@
         </button>
 
         <!-- navbar links -->
-        <div
-          class="collapse navbar-collapse"
-          id="main-nav"
-        >
+        <div class="collapse navbar-collapse" id="main-nav">
           <ul class="navbar-nav">
             <hr />
 
@@ -76,31 +74,31 @@
     </nav>
     <br />
 
-    <div class="container my-5">
-      <div class="row">
-        <p class="col-6">
-          <span class="om">OM</span>
-          <br />
-          <br />
-          Collectia er en førende teknologi-drevet virksomhed, der specialiserer
-          sig i kreditstyring, herunder kreditvurdering, fakturering,
-          inddrivelse af gæld, digitale betalingsløsninger og datamonitorering.
-          Ud over vores hovedkontor i København har vi otte kontorer fordelt på
-          Norge, Sverige, Finland samt Tyskland, hvor vi beskæftiger næsten 300
-          dedikerede medarbejdere og betjener over 20.000 kunder i hele Europa.
-          Vi er en virksomhed med fokus på mennesker i ethvert henseende.
-        </p>
-        <p class="col-6">
-          <br />
-          <br />
-          Vores engagerede medarbejdere er vores mest værdifulde ressource.
-          Medlemmer af Collectia-familien er uddannet efter de højeste
-          standarder og modtager kontinuerlig støtte og uddannelse for at sikre,
-          at debitorer oplever en retfærdig, professionel og respektfuld
-          behandling i deres interaktioner med os. Vi er overbeviste om, at
-          investering i vores medarbejdere er afgørende for at levere den bedst
-          mulige service til både vores kunder og debitorer.
-        </p>
+    <div
+      class="container my-5 bg-light d-flex flex-column align-items-center p-3"
+    >
+      <div>
+        <span
+          ><i class="fa-solid fa-clock"></i> <strong>Åbningstider:</strong>
+        </span>
+        <br />
+        <br />
+        <p>Mandag - Tirsdag: kl. 11.00 - 21.00</p>
+        <p>Onsdag - Lørdag: kl. 11.00 - 22.00</p>
+        <p>Søndag: kl. 12.00 - 21.00</p>
+        <br />
+        <br />
+        <a href="tel:+4561271267">
+          <i class="fa-solid fa-phone kontaktphone"> </i>
+          <span>+45 6127 1267</span>
+        </a>
+
+        <br />
+        <br />
+        <a href="mailto:cem.a.turker@gmail.com">
+          <i class="fa-solid fa-envelope kontaktemail"> </i>
+          <span> cem.a.turker@gmail.com</span>
+        </a>
       </div>
     </div>
     <!-- jQuery library -->

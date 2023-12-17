@@ -32,6 +32,7 @@ stripe_keys = {
 stripe.api_key = stripe_keys["secret_key"]
 
 
+# @app.routes decorators are used to associate the function with a URL. Whenever the browser makes a request to /, it will trigger the forside() function.
 @app.route("/")
 def forside():
     return render_template("forside.html")
@@ -42,6 +43,8 @@ def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
 
+    # Server side rendering . Thymeleaf er også server side rendering
+    # SSR is when a user requests a webpage and the server genereates a complete HTML page ? 
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM products WHERE section='Populær'")
     popular_products = cursor.fetchall()
@@ -55,6 +58,7 @@ def home():
     cursor.execute("SELECT * FROM products WHERE section='Dips'")
     dips_products = cursor.fetchall()
 
+    #this is serverside rendering, data is sent also to the template 
     return render_template(
         "home.html",
         popular_products=popular_products,
@@ -65,9 +69,9 @@ def home():
     )
 
 
-@app.route("/kontakt/")
-def kontakt():
-    return render_template("kontakt.html")
+@app.route("/aabningstider/")
+def aabningstider():
+    return render_template("aabningstider.html")
 
 
 @app.route("/checkout")
@@ -75,7 +79,7 @@ def checkout():
     return render_template("checkout.html", key=stripe_keys["publishable_key"])
 
 
-@app.route("/charge", methods=["POST"])
+@app.route("/charge", methods=["POST"])  # HTTP verbum, Ændrer
 def charge():
     userid = session.get("stored_user_id")
     cur = mysql.connection.cursor()
@@ -85,6 +89,7 @@ def charge():
     paid_amount = request.form.get("amountdue")
     amount = paid_amount
 
+    # kommer fra frontenden fra skjult input felt pakket ind i JSON
     orderJSON = request.form.get("orders")
     print("Det her er JSON", orderJSON)
 
@@ -105,7 +110,7 @@ def charge():
         )
 
         # print(charge) viser hvad man kan bruge i koden fra charge
-        # parsedCharge = json.loads(charge). Charge er allerede Pythin dictionary
+        # parsedCharge = json.loads(charge). Charge er allerede Python dictionary
         print(charge["id"])
         print(charge)
         paymentID = charge["id"]
@@ -130,10 +135,8 @@ def charge():
 
         mailstr = (
             f"<html><head>"
-
             + ' <script src="https://kit.fontawesome.com/558b5cad1d.js" crossorigin="anonymous"></script>'
             + ' <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>'
-            
             + "<style>"
             + "body {"
             + "  display: flex;"
@@ -142,48 +145,38 @@ def charge():
             + "  padding-top: 10px;"
             + "  margin: 0;"
             + "}"
-            
             + ".contact-button {"
             + "  border-radius: 50px;"
-            + "  background-color: #ff8000"  
+            + "  background-color: #ff8000"
             + "  color: black;"
             + "}"
-            
             + "h2 {"
             + "  color: #ff8000"
             + "  font-style: italic;"
             + "}"
-            
             + "p {"
             + "  font-size: 16px;"
             + "  font-weight: 500;"
             + "}"
-
             + "table {"
             + "  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);"
             + "  border-collapse: collapse;"
             + "  width: 300px;"
             + "}"
-            
             + "table, th, td {"
             + "  border: 1px solid black;"
             + "  text-align: left;"
             + "  font-weight: 400;"
             + "}"
-            
-         
             + "th, td {"
             + "  padding: 8px;"
             + "  background-color:#ff8000;"
             + "}"
-            
             + "</style>"
             + "</head><body>"
-            
             + '<h2>JUST ORDER<i class="fa-solid fa-house fa-2x" style="margin: 10px"></i></h2>'
             + f"<p> Hej {results[1]},</p>"
             + "<p>Du har købt:</p>"
-            
             + "<table>"
             + "<tr><th>Produkt</th><th>Antal</th><th>Pris</th></tr>"
         )
@@ -205,7 +198,7 @@ def charge():
             + "</table>"
             + f"<p>Afhentning kl: <strong>{delivery_time_formatted}</strong></p>"
             + f"<p>Ordrenummer: {paymentID}</p>"
-            + ' <a class="btn contact-button" href="/kontakt" role="button">Kontakt os</a>'    
+            + ' <a class="btn contact-button" href="/kontakt" role="button">Kontakt os</a>'
             + "</body></html>"
         )
 
@@ -213,7 +206,7 @@ def charge():
 
         subject = "Ordrebekræftelse:"
         sender = os.getenv("MAIL_USERNAME")
-        recipients = [customer_email, 'cem_akay@icloud.com']
+        recipients = [customer_email, "cem_akay@icloud.com"]
 
         msg = Message(subject=subject, sender=sender, recipients=recipients)
         msg.html = mailstr
@@ -338,6 +331,7 @@ def logout():
     return redirect(url_for("home"))
 
 
+#to see who is in the session
 @app.route("/session")
 def view_session():
     # Access and print the entire session

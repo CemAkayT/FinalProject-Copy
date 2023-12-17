@@ -17,8 +17,9 @@
       src="https://kit.fontawesome.com/558b5cad1d.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="icon" type="image.png" href="/static/images/logo.png" />
 
-    <title>Menu</title>
+    <title>Home</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-xxxl bg-info fixed-top">
@@ -59,7 +60,7 @@
             </li>
             <hr />
             <li class="nav-item pl-4 my-1 mb-md-0">
-              <a class="text" href="{{url_for('kontakt')}}"> Kontakt </a>
+              <a class="text" href="{{url_for('aabningstider')}}"> Åbningstider </a>
             </li>
 
             <hr />
@@ -124,7 +125,7 @@
               {% for popular in popular_products %}
               <br />
               <div class="row row-hover">
-                <br />
+      
                 <div class="col-9">
                   <div class="container-fluid">
                     <p class="titel">{{ popular[1]}}</p>
