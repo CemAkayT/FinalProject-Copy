@@ -46,16 +46,16 @@ def home():
     # Server side rendering . Thymeleaf er også server side rendering
     # SSR is when a user requests a webpage and the server genereates a complete HTML page ? 
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM products WHERE section='Populær'")
+    cursor.execute("SELECT * FROM products WHERE section='Populær' ORDER BY Title ASC")
     popular_products = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM products WHERE section='Menu'")
+    cursor.execute("SELECT * FROM products WHERE section='Menu' ORDER BY Title ASC")
     menu_products = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM products WHERE section='Drikkevarer'")
+    cursor.execute("SELECT * FROM products WHERE section='Drikkevarer' ORDER BY Title ASC")
     drinks_products = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM products WHERE section='Dips'")
+    cursor.execute("SELECT * FROM products WHERE section='Dips' ORDER BY Title ASC")
     dips_products = cursor.fetchall()
 
     #this is serverside rendering, data is sent also to the template 

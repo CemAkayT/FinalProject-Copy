@@ -7,12 +7,11 @@ def insert_product(title, description, price, section, image_path):
             cur = mysql.connection.cursor()
             cur.execute("SET NAMES utf8mb4;")
             cur.execute("SET CHARACTER SET utf8mb4;")
-       
-            
-            cur.execute(
-                "INSERT INTO products (title, description, price, section, image_path) VALUES (%s, %s, %s, %s, %s)",
-                (title, description, price, section, image_path),
-            )
+
+            query = "INSERT INTO products (title, description, price, section, image_path) VALUES (%s, %s, %s, %s, %s)"
+            values = (title, description, price, section, image_path)
+            cur.execute(query, values)
+
             mysql.connection.commit()
             cur.close()
             return True
@@ -22,11 +21,11 @@ def insert_product(title, description, price, section, image_path):
 
 
 if __name__ == "__main__":
-    title = "BEST BEST"
-    description = "Amerikansk inspireret med double cheeseost"
-    price = 199.99
-    section = "Populær"
-    image_path = "/static/images/newyorker.jpeg"
+    title = "Coca Cola 0.33 L"
+    description = "Iskold Cola"
+    price = 14
+    section = "Drikkevarer"
+    image_path = "/static/images/cola.jpeg"
 
     if insert_product(title, description, price, section, image_path):
         print("Product inserted successfully")
