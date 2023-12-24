@@ -19,7 +19,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"  # Set the login view to your login route
-login_manager.login_message = u"Venligst login for at se siden."
+login_manager.login_message = u"Venligst login for at se menuen"
 
 login_manager.login_view = "login"  # Set the login view to your login rou
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
