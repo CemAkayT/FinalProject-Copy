@@ -132,9 +132,9 @@ i.fa-2x {
 #kurv {
   position: fixed;
   right: 0; /* Adjust the right position as needed */
-  /* z-index: -1; */
   box-shadow: -30px 5px 10px rgba(230, 196, 196, 0.1);
 }
+
 .kassen {
   background-color: #ff8000;
   color: white;
@@ -157,7 +157,6 @@ i.fa-2x {
     background-color: #ff8000; /* Customize the button's appearance */
     color: #fff;
     padding: 10px;
-    z-index: -999; 
   }
 }
 

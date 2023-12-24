@@ -12,16 +12,23 @@ import bcrypt, os, stripe, bleach, json, time
 from password_validation import is_password_strong
 from flask_mail import Mail, Message
 from db import mysql, app
+from models import User
 
-# import json
-# import bleach
+from flask_login import LoginManager, login_user, login_required, logout_user
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"  # Set the login view to your login route
+login_manager.login_message = u"Venligst login for at se siden."
 
+login_manager.login_view = "login"  # Set the login view to your login rou
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
 app.config["MAIL_PORT"] = os.getenv("MAIL_PORT")
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS")
+
+
 mail = Mail(app)
 
 stripe_keys = {
@@ -32,6 +39,12 @@ stripe_keys = {
 stripe.api_key = stripe_keys["secret_key"]
 
 
+# Implement a user_loader function to retrieve a user based on user_id
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id)
+
+
 # @app.routes decorators are used to associate the function with a URL. Whenever the browser makes a request to /, it will trigger the forside() function.
 @app.route("/")
 def forside():
@@ -39,12 +52,13 @@ def forside():
 
 
 @app.route("/home")
+@login_required
 def home():
     messages = get_flashed_messages()
     # Hent produkter fra databasen baseret på sektion
 
     # Server side rendering . Thymeleaf er også server side rendering
-    # SSR is when a user requests a webpage and the server genereates a complete HTML page ? 
+    # SSR is when a user requests a webpage and the server genereates a complete HTML page ?
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM products WHERE section='Populær' ORDER BY Title ASC")
     popular_products = cursor.fetchall()
@@ -52,13 +66,15 @@ def home():
     cursor.execute("SELECT * FROM products WHERE section='Menu' ORDER BY Title ASC")
     menu_products = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM products WHERE section='Drikkevarer' ORDER BY Title ASC")
+    cursor.execute(
+        "SELECT * FROM products WHERE section='Drikkevarer' ORDER BY Title ASC"
+    )
     drinks_products = cursor.fetchall()
 
     cursor.execute("SELECT * FROM products WHERE section='Dips' ORDER BY Title ASC")
     dips_products = cursor.fetchall()
 
-    #this is serverside rendering, data is sent also to the template 
+    # this is serverside rendering, data is sent also to the template
     return render_template(
         "home.html",
         popular_products=popular_products,
@@ -145,11 +161,6 @@ def charge():
             + "  padding-top: 10px;"
             + "  margin: 0;"
             + "}"
-            + ".contact-button {"
-            + "  border-radius: 50px;"
-            + "  background-color: #ff8000"
-            + "  color: black;"
-            + "}"
             + "h2 {"
             + "  color: #ff8000"
             + "  font-style: italic;"
@@ -198,7 +209,8 @@ def charge():
             + "</table>"
             + f"<p>Afhentning kl: <strong>{delivery_time_formatted}</strong></p>"
             + f"<p>Ordrenummer: {paymentID}</p>"
-            + ' <a class="btn contact-button" href="/kontakt" role="button">Kontakt os</a>'
+            + "<p>Har du glemt noget?</p>"
+            + ' <a class="btn btn-lg contact-button" style="color:black; background-color: #ff8800; border-radius: 50px; outline: none;"  href="https://justorder.azurewebsites.net/aabningstider/" role="button">Kontakt os</a>'
             + "</body></html>"
         )
 
@@ -221,52 +233,20 @@ def charge():
         return f"Stripe error: {str(e)}"
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = bleach.clean(request.form.get("email"))
-
-        password = request.form.get("password")
-
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM customers WHERE email = %s", [email])
-        results = cur.fetchone()
-
-        if results:
-            stored_password = results[6]
-            if bcrypt.checkpw(
-                password.encode("utf-8"), stored_password.encode("utf-8")
-            ):
-                stored_user_id = results[0]
-                session["stored_user_id"] = stored_user_id
-
-                print(f"user id {stored_user_id} has logged in")
-                flash(f"Godt at se dig igen {results[1]} ❤️ ", "success")
-                return redirect(url_for("home"))
-            else:
-                flash("Login fejlede. Tjek din login detaljer.", "danger")
-                return render_template("login.html")
-        else:
-            flash("Der findes ikke bruger med denne mail", "warning")
-
-    return render_template("login.html")
-
-
 @app.route("/opret", methods=["GET", "POST"])
 def opret():
     if "stored_user_id" in session:
-        flash("Du er allerede logget ind.", "info")
         print("Vi har allerede session id")
         return redirect(url_for("home"))
 
     if request.method == "POST":
         # sanitizing user input with bleach
-        name = request.form.get("name")
-        surname = request.form.get("surname")
-        town = request.form.get("town")
-        zip = request.form.get("zip")
+        name = bleach.clean(request.form.get("name"))
+        surname = bleach.clean(request.form.get("surname"))
+        town = bleach.clean(request.form.get("town"))
+        zip = bleach.clean(request.form.get("zip"))
         email = bleach.clean(request.form.get("email"))
-        password = request.form.get("password")
+        password = bleach.clean(request.form.get("password"))
 
         # user input validation
         if not email or not password:
@@ -305,12 +285,48 @@ def opret():
 
         print(f"user id {new_user[0]} has been created with email: {new_user[5]}")
         flash(
-            f"Hej {new_user[1]}. Tak fordi du oprettede dig på siden👍 - Tag et kig på vores lækre mad"
+            f"Hej {new_user[1]}. Tak fordi du oprettede dig på siden👍 - Du kan nu logge ind og se vores menu"
         )
 
         return redirect(url_for("home"))
 
     return render_template("opret.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = bleach.clean(request.form.get("email"))
+
+        password = request.form.get("password")
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM customers WHERE email = %s", [email])
+        results = cur.fetchone()
+
+        if results:
+            stored_password = results[6]
+            if bcrypt.checkpw(
+                password.encode("utf-8"), stored_password.encode("utf-8")
+            ):
+                stored_user_id = results[0]
+                session["stored_user_id"] = stored_user_id
+                user = User(stored_user_id)
+                login_user(user)
+                
+                
+
+                print(f"UserMixin {user.id} in logged in")
+                print(f"user id {stored_user_id} has logged in")
+                flash(f"Godt at se dig igen {results[1]} ❤️ ", "success")
+                return redirect(url_for("home"))
+            else:
+                flash("Login fejlede. Tjek din login detaljer.", "danger")
+                return render_template("login.html")
+        else:
+            flash("Der findes ikke bruger med denne mail", "warning")
+
+    return render_template("login.html")
 
 
 @app.route("/logout")
@@ -322,16 +338,17 @@ def logout():
     session.pop("stored_user_id", None)
 
     print(f"user_id {user_id} has been logged out")
+    logout_user()
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM customers WHERE user_id = %s", [user_id])
 
     current_user = cursor.fetchone()
     cursor.close()
     flash(f"Tak for nu {current_user[1]}. Håber vi ses igen snart. ", "success")
-    return redirect(url_for("home"))
+    return redirect(url_for("login"))
 
 
-#to see who is in the session
+# to see who is in the session
 @app.route("/session")
 def view_session():
     # Access and print the entire session
