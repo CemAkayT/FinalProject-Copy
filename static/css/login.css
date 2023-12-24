@@ -39,10 +39,10 @@ label {
 
 .forgot {
   display: flex;
+  font-weight: 200;
   justify-content: end;
   text-decoration: none;
   color: #ff8000;
-  font-weight: 200;
 }
 
 .form-control::placeholder {

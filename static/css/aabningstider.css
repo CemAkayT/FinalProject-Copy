@@ -17,10 +17,6 @@ a{
   color: #ff8000;
 }
 
-a.text:hover {
-  color: wheat;
-}
-
 a.text {
   color: #ff8000;
   text-decoration: none;
@@ -57,4 +53,7 @@ a.text {
 .navbar-nav .nav-item a.text:hover {
   text-decoration: none;
   color: #ff8000;
+}
+.container{
+  width: 450px;
 }
