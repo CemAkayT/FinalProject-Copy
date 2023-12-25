@@ -285,7 +285,7 @@ def opret():
 
         print(f"user id {new_user[0]} has been created with email: {new_user[5]}")
         flash(
-            f"Hej {new_user[1]}. Tak fordi du oprettede dig på siden👍 - Du kan nu logge ind og se vores menu"
+            f"Hej {new_user[1]}. Tak fordi du oprettede dig som bruger👍 - Du kan nu logge ind og se vores menu"
         )
 
         return redirect(url_for("home"))
