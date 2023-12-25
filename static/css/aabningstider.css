@@ -7,9 +7,8 @@
 a i {
   color: #ff8000;
   text-decoration: none;
-  
 }
-a{
+a {
   text-decoration: none;
 }
 
@@ -28,8 +27,7 @@ a.text {
   letter-spacing: 2px;
 }
 
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   span.order {
     font-size: 15px;
   }
@@ -38,7 +36,8 @@ a.text {
   }
 }
 
-.kontaktemail, .kontaktphone{
+.kontaktemail,
+.kontaktphone {
   color: black;
   text-decoration: none;
 }
@@ -54,6 +53,11 @@ a.text {
   text-decoration: none;
   color: #ff8000;
 }
-.container{
+.container {
   width: 450px;
+}
+@media (max-width: 499px) and (max-height: 2532px) {
+  .container {
+    width: 350px; /* Adjust the width for iPhones */
+  }
 }
