@@ -344,7 +344,7 @@ def logout():
 
     current_user = cursor.fetchone()
     cursor.close()
-    flash(f"Tak for nu {current_user[1]}. Vi ses igen snart. ", "success")
+    flash(f"Tak for nu {current_user[1]}. Vi ses igen snart 🙏. ", "success")
     return redirect(url_for("login"))
 
 
