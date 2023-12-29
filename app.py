@@ -321,7 +321,7 @@ def login():
                 flash(f"Godt at se dig igen {results[1]} ❤️ ", "success")
                 return redirect(url_for("home"))
             else:
-                flash("Login fejlede. Venligst tjek din login detaljer.", "danger")
+                flash("Login fejlede desværre. Venligst tjek din login detaljer.", "danger")
                 return render_template("login.html")
         else:
             flash("Der findes ikke bruger med denne mail", "warning")
