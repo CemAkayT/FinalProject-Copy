@@ -324,6 +324,7 @@ def login():
                 flash("Login fejlede. Venligst tjek din login detaljer.", "danger")
                 return render_template("login.html")
         else:
+            print('Der findes ingen bruger med denne mail')
             flash("Der findes ikke bruger med denne mail", "warning")
 
     return render_template("login.html")
