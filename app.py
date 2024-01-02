@@ -127,8 +127,8 @@ def charge():
 
         # print(charge) viser hvad man kan bruge i koden fra charge
         # parsedCharge = json.loads(charge). Charge er allerede Python dictionary
-        print(charge["id"])
-        print(charge)
+        print(f'Det er charge id {charge["id"]}')
+        print (f"Det er alt hvad charge indeholder{charge}")
         paymentID = charge["id"]
 
         for order in parsedJSON:
@@ -223,7 +223,6 @@ def charge():
         msg = Message(subject=subject, sender=sender, recipients=recipients)
         msg.html = mailstr
         mail.send(msg)
-        print(mailstr)
 
         # Pass the amount to the template
         return render_template("charge.html", charge=charge, amount=amount)
