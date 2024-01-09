@@ -1,9 +1,13 @@
 function addProductToCart(quantity, title, price) {
   const cartContainer = document.getElementById("cart");
+  console.log("Vi tager fat i div med id 'cart'");
   const cartItemCountElement = document.getElementById("cartItemCount");
+  console.log("vi tager fat i det lille tal ved siden af kurven");
 
   const cartItem = document.createElement("div");
+  console.log("vi opretter div");
   cartItem.classList.add("cart-item");
+  console.log("et nyt cart-item div er oprettet");
 
   // Store the initial quantity and price
   let currentQuantity = quantity;
@@ -46,7 +50,8 @@ function addProductToCart(quantity, title, price) {
     cartQuantityElement.textContent = currentQuantity;
     quantityElement.textContent = currentQuantity;
     updateCartItemPrice();
-    updateCartItemCount(true); // Increment the count
+    updateCartItemCount(true); // Increment the count in the cart
+    console.log("Vi øger antal af samme produkt");
   });
 
   decrementButton.addEventListener("click", () => {
@@ -55,10 +60,12 @@ function addProductToCart(quantity, title, price) {
       quantityElement.textContent = currentQuantity;
       cartQuantityElement.textContent = currentQuantity;
       updateCartItemPrice();
-      updateCartItemCount(false); // Decrement the count
+      updateCartItemCount(false); // Decrement the count in the cart
+      console.log("Vi reducerer antal af samme produkt i kurven");
 
       if (currentQuantity === 0) {
         cartContainer.removeChild(cartItem); // Remove the item from the cart if count reaches 0
+        console.log("Vi fjerner produktet helt fra kurven");
       }
     }
   });
@@ -67,7 +74,8 @@ function addProductToCart(quantity, title, price) {
   function updateCartItemPrice() {
     const cartPriceElement = cartItem.querySelector(".cart-price");
     currentPrice = currentQuantity * parseFloat(price.replace(" kr.", ""));
-    cartPriceElement.textContent = currentPrice.toFixed(2) + " kr.";
+    cartPriceElement.textContent =
+      currentPrice.toFixed(2).replace(".", ",") + " kr.";
     updateTotalPrice();
   }
 
@@ -75,21 +83,25 @@ function addProductToCart(quantity, title, price) {
 
   const separator = document.createElement("hr");
   cartItem.appendChild(separator);
+  console.log("Vi tilføjer seperator <hr>");
 
   // Update the total price
   updateCartItemCount(true);
   updateTotalPrice();
 
-  // Increment the cart item count
+  // Funktionen står for at holde styr på antal ved siden af kurv svg
   function updateCartItemCount(increment) {
     const currentCount = parseInt(cartItemCountElement.textContent);
     if (increment) {
       cartItemCountElement.textContent = currentCount + 1;
+      console.log("det lille tal ved siden af kurven er øget med en");
     } else {
       if (currentCount > 0) {
         cartItemCountElement.textContent = currentCount - 1;
+        console.log("det lille tal ved siden af kurven reduceres med en");
       }
     }
     sessionStorage.setItem("quantity", cartItemCountElement.textContent);
+    console.log(sessionStorage.getItem("quantity"));
   }
 }

@@ -8,9 +8,10 @@ from flask import (
     session,
 )
 
-import bcrypt, os, stripe, bleach, json, time
+import os, stripe, bleach, json, time
 from password_validation import is_password_strong
 from flask_mail import Mail, Message
+from flask_bcrypt import Bcrypt
 from db import mysql, app
 from models import User
 
@@ -19,7 +20,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"  # Set the login view to your login route
-login_manager.login_message = u"Venligst login for at se menuen"
+login_manager.login_message = "Venligst login for at se menuen"
 
 login_manager.login_view = "login"  # Set the login view to your login rou
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
@@ -30,10 +31,11 @@ app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS")
 
 
 mail = Mail(app)
+bcrypt = Bcrypt(app)
 
 stripe_keys = {
     "secret_key": os.getenv("STRIPE_SECRET_KEY"),
-    "publishable_key": os.getenv("STRIPE_PUBLISHABLE_KEY"),
+    "publishable_key": os.getenv("STRIPE_PUBLISHABLE_KEY"), #PK bruges til at oprette forbindelse til Stripe's betalingsgateway og identificerer softwaren
 }
 
 stripe.api_key = stripe_keys["secret_key"]
@@ -107,10 +109,10 @@ def charge():
 
     # kommer fra frontenden fra skjult input felt pakket ind i JSON
     orderJSON = request.form.get("orders")
-    print("Det her er JSON", orderJSON)
+    print("Det her er liste af JSON objekter", orderJSON)
 
     parsedJSON = json.loads(orderJSON)
-    print("Det her er parsed JSON til Python array")
+    print("Dette er den parsede JSON i form af en Python-dictionary")
     for order in parsedJSON:
         print(order)
 
@@ -128,7 +130,7 @@ def charge():
         # print(charge) viser hvad man kan bruge i koden fra charge
         # parsedCharge = json.loads(charge). Charge er allerede Python dictionary
         print(f'Det er charge id {charge["id"]}')
-        print (f"Det er alt hvad charge indeholder{charge}")
+        print(f"Det er alt hvad charge indeholder{charge}")
         paymentID = charge["id"]
 
         for order in parsedJSON:
@@ -193,18 +195,21 @@ def charge():
         )
 
         total = 0
+        totalvarer = 0
         for order in parsedJSON:
+            print(f"order['qnty'] er af typen: {type(order['qnty'])}")  # Udskriv typen
             mailstr = (
                 mailstr
-                + f"<tr><td>{order['title']}</td><td>{order['qnty']} stk.</td><td>{order['price']} kr.</td></tr>"
+                + f"<tr><td>{order['title']}</td><td>{order['qnty']} stk.</td><td>{order['price']},00 kr.</td></tr>"
             )
             total += order["price"]
+            totalvarer += int(order["qnty"])
 
         mailstr = (
             mailstr
             + "<tr><td><strong>Total</strong></td>"
-            + "<td></td>"
-            + f"<td><strong>{total} kr.</strong></td>"
+            + f"<td><strong>{totalvarer} stk.</strong></td>"
+            + f"<td><strong>{total},00 kr.</strong></td>"
             + "</tr>"
             + "</table>"
             + f"<p>Afhentning kl: <strong>{delivery_time_formatted}</strong></p>"
@@ -239,7 +244,7 @@ def opret():
         return redirect(url_for("home"))
 
     if request.method == "POST":
-        # sanitizing user input with bleach
+        # sanitizing user input with bleach to protect against vulnerabilities like Cross Site Scripting(XSS)
         name = bleach.clean(request.form.get("name"))
         surname = bleach.clean(request.form.get("surname"))
         town = bleach.clean(request.form.get("town"))
@@ -247,83 +252,80 @@ def opret():
         email = bleach.clean(request.form.get("email"))
         password = bleach.clean(request.form.get("password"))
 
-        # user input validation
+        # performing validationg to make sure the fields are not empty
         if not email or not password:
             return redirect(url_for("opret"))
-
-        if not is_password_strong(password):
+        # additional validation to check for password strength
+        elif not is_password_strong(password):
             flash(
                 "Adgangskode skal være på mindst 8 tegn, indeholde mindst et ciffer, et stort bogstav, et lille bogstav og et specialtegn",
                 "danger",
             )
             return render_template("opret.html")
 
-        # hash the password + salt
-        hashed_pw = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+        # The user's password is hashed using the flask_bcrypt. It automatically handles salting 
+        else:
+            hashed_pw = bcrypt.generate_password_hash(password)
 
-        # establish connection do DB
-        # %s are placeholders. prevents sql injection
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM customers WHERE email = %s", [email])
-        result = cur.fetchone()
-        if result:
-            flash("Email er desværre allerede taget 😩", "warning")
-            return render_template("opret.html")
-        cur.execute(
-            "INSERT INTO customers(first_name, sur_name, town, zip_code, email, password, created_at) VALUES (%s, %s,%s,%s,%s,%s, DATE_ADD(NOW(), INTERVAL 1 HOUR))",
-            (name, surname, town, zip, email, hashed_pw),
-        )
+            # establish connection do DB and
+            # %s are placeholders. prevents sql injection
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM customers WHERE email = %s", [email])
+            result = cur.fetchone()  # check if provided email already exists
+            if result:
+                flash("Email er desværre allerede taget 😩", "warning")
+                return render_template("opret.html")
+            else:
+                cur.execute(
+                    "INSERT INTO customers(first_name, sur_name, town, zip_code, email, password, created_at) VALUES (%s, %s,%s,%s,%s,%s, DATE_ADD(NOW(), INTERVAL 1 HOUR))",
+                    (name, surname, town, zip, email, hashed_pw),
+                )
 
-        mysql.connection.commit()
-        cur.execute(
-            "SELECT * FROM customers WHERE email = %s", [email]
-        )  # Fetch the newly registered user's data
-        new_user = cur.fetchone()
-        cur.close()
-        session["stored_user_id"] = new_user[0]
+                mysql.connection.commit()
+                cur.execute(
+                    "SELECT * FROM customers WHERE email = %s", [email]
+                )  # Fetch the newly registered user's data
+                new_user = cur.fetchone()
+                cur.close()
+                session["stored_user_id"] = new_user[0]
 
-        print(f"user id {new_user[0]} has been created with email: {new_user[5]}")
-        flash(
-            f"Hej {new_user[1]}. Tak fordi du oprettede dig som bruger👍 - Du kan nu logge ind og se vores menu"
-        )
+                print(
+                    f"user id {new_user[0]} has been created with email: {new_user[5]}"
+                )
+                flash(
+                    f"Hej {new_user[1]}. Tak fordi du oprettede dig som bruger👍 - Du kan nu logge ind og se vores menu"
+                )
 
-        return redirect(url_for("home"))
-
+                return redirect(url_for("home"))
     return render_template("opret.html")
 
 
+# route handles both 'GET' and 'POST' requests
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+    if request.method == "POST": # user tries to login becase it's a post request
         email = bleach.clean(request.form.get("email"))
-
         password = request.form.get("password")
 
-        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor() #cursor is like an iterator, pointer
         cur.execute("SELECT * FROM customers WHERE email = %s", [email])
         results = cur.fetchone()
 
         if results:
             stored_password = results[6]
-            if bcrypt.checkpw(
-                password.encode("utf-8"), stored_password.encode("utf-8")
-            ):
+            if bcrypt.check_password_hash(stored_password, password): #compares stored pw with pw from input field. Returns true if they match else false
                 stored_user_id = results[0]
                 session["stored_user_id"] = stored_user_id
                 user = User(stored_user_id)
                 login_user(user)
-                
-                
 
-                print(f"UserMixin {user.id} in logged in")
-                print(f"user id {stored_user_id} has logged in")
+                print(f"UserMixin {user.id} has logged in")
                 flash(f"Godt at se dig igen {results[1]} ❤️ ", "success")
                 return redirect(url_for("home"))
             else:
                 flash("Login fejlede. Venligst tjek din login detaljer.", "danger")
                 return render_template("login.html")
         else:
-            print('Der findes ingen bruger med denne mail')
             flash("Der findes ikke bruger med denne mail", "warning")
 
     return render_template("login.html")
@@ -332,28 +334,15 @@ def login():
 @app.route("/logout")
 def logout():
     # Retrieve the user's ID before removing it from the session
-    user_id = session.get("stored_user_id")
+    user_id = session.pop("stored_user_id", None)
 
-    # Remove user's session data (stored_user_id)
-    session.pop("stored_user_id", None)
+    if user_id is not None:
+        print(f"user_id {user_id} has been logged out")
+        logout_user()
+        flash(f"Tak for nu. Vi ses igen snart 🙏 ", "success")
 
-    print(f"user_id {user_id} has been logged out")
-    logout_user()
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM customers WHERE user_id = %s", [user_id])
-
-    current_user = cursor.fetchone()
-    cursor.close()
-    flash(f"Tak for nu. {current_user[1]}. Vi ses igen snart 🙏 ", "success")
     return redirect(url_for("login"))
 
-
-# to see who is in the session
-@app.route("/session")
-def view_session():
-    # Access and print the entire session
-    session_data = dict(session)
-    return str(session_data)
 
 
 if __name__ == "__main__":

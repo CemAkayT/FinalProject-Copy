@@ -29,30 +29,30 @@
       Du bliver videreført til sikker betaling efter du har trykket på 'Pay with
       Card' knappen
     </h2>
+    <!-- definerer en HTML formualar. Data sendes til /charge når der trykkes på'Pay with Cars' -->
     <form action="/charge" method="post">
-      <article>
-        <label for="checkout_total">Til betaling: DKK </label>
-        <span id="netto_amount"></span>
-        <input type="hidden" name="amountdue" id="amountdue" />
+      <article> <!-- <article>-elementet indeholder indholdet af formularen -->
+        <label for="checkout_total">Til betaling: DKK </label> <!-- tekst til modtager -->
+        <span id="netto_amount"></span> <!-- pladsholder for beløb som kommer fra home.html -->
+        <input type="hidden" name="amountdue" id="amountdue" /> <!-- to skjulte input felter som sendes med formularen til /charge-->
         <input type="hidden" name="orders" id="orders" />
       </article>
 
-      <script
-        src="https://checkout.stripe.com/checkout.js"
-        class="stripe-button"
-        data-key="{{ key }}"
-        data-description="Sikker betaling med Stripe"
+      <!-- elementet indlæser Stripe's Checkout JavaScript-biblioteket og indsamler data som sendes til serveren (/charge)-->
+      <script 
+        src="https://checkout.stripe.com/checkout.js" 
+        class="stripe-button" 
+        data-key="{{ key }}" 
         data-amount="{{numericValue}}"
-        data-currency="dkk"
       ></script>
     </form>
 
     <script>
       // Retrieve the 'nettoAmount' value and orders from sessionStorage
-      const nettoValue = sessionStorage.getItem("nettoAmount");
-      const orderJSON = sessionStorage.getItem("orderJSON"); // sessionStorage sat i updateTotalPrice.js linje 25
+      const nettoValue = sessionStorage.getItem("nettoAmount"); // sessionStorage sat i updateTotalPrice.js 
+      const orderJSON = sessionStorage.getItem("orderJSON"); // sessionStorage sat i updateTotalPrice.js 
 
-      const nettoAmountElement = document.getElementById("netto_amount");
+      const nettoAmountElement = document.getElementById("netto_amount"); // sætter beløbet i span linje 36
 
       const input_field_value = document.getElementById("amountdue");
       // Vi indsætter JSON fra session storage med produkterne ind i skjult inputfelt som sendes til backend
@@ -64,12 +64,13 @@
       if (nettoValue !== null) {
         // Convert retrieved string to a numeric
         let numericValue = parseFloat(nettoValue);
-        numericValue = numericValue * 100; // vigtigt betaling sker i cents
+        numericValue = numericValue * 100; // vigtigt betaling sker i cents i /charge
         input_field_value.value = numericValue;
 
         // Update the content of the <span> with the numeric value
-        const numDivision = numericValue / 100;
-        nettoAmountElement.textContent = numDivision.toFixed(2);
+        const numDivision = numericValue / 100; 
+        nettoAmountElement.textContent =
+          numDivision.toFixed(2).replace(".", ",") + " kr.";
         console.log("Value is", numericValue);
       } else {
         console.log("Value not found in sessionStorage");

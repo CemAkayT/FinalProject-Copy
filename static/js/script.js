@@ -6,10 +6,12 @@ function removeCartItem(cartContainer, cartItem) {
 function updateTotalInParentheses() {
   const nettoPrisElement = document.getElementById("netto");
   const nettoPrice = parseFloat(nettoPrisElement.innerText.replace(" kr.", ""));
-  totalInParentheses.textContent = `(${nettoPrice.toFixed(2)} kr.)`;
+  totalInParentheses.textContent = `(${nettoPrice
+    .toFixed(2)
+    .replace(".", ",")} kr.)`;
 }
 
-// Example: Handle the click event for the "+" button to add a product
+//  Handler klik event for "+" knappen ved siden af produkt billede for at tilføje et produkt til kurven
 const plusButtons = document.querySelectorAll(".larger-plus");
 
 plusButtons.forEach((button) => {
