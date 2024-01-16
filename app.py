@@ -18,11 +18,10 @@ from models import User
 from flask_login import LoginManager, login_user, login_required, logout_user
 
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(app) #initialize with Flask app
 login_manager.login_view = "login"  # Set the login view to your login route
-login_manager.login_message = "Venligst login for at se menuen"
+login_manager.login_message = "Login for at se menuen"
 
-login_manager.login_view = "login"  # Set the login view to your login rou
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
 app.config["MAIL_PORT"] = os.getenv("MAIL_PORT")
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
@@ -34,8 +33,8 @@ mail = Mail(app)
 bcrypt = Bcrypt(app)
 
 stripe_keys = {
-    "secret_key": os.getenv("STRIPE_SECRET_KEY"),
-    "publishable_key": os.getenv("STRIPE_PUBLISHABLE_KEY"), #PK bruges til at oprette forbindelse til Stripe's betalingsgateway og identificerer softwaren
+    "secret_key": os.getenv("STRIPE_SECRET_KEY"), # med SK kan serveren udføre handlinger på min konto såsom starte en transaktion 
+    "publishable_key": os.getenv("STRIPE_PUBLISHABLE_KEY"), #PK fortæller Stripe at forestpørgler der kommer fra frontenden er associeret med min konto
 }
 
 stripe.api_key = stripe_keys["secret_key"]
@@ -47,7 +46,8 @@ def load_user(user_id):
     return User(user_id)
 
 
-# @app.routes decorators are used to associate the function with a URL. Whenever the browser makes a request to /, it will trigger the forside() function.
+# @app.routes decorators are used to associate a view functions with URL endpoints. 
+# Whenever the browser makes a request to an URL, it will invoke the underlyging function.
 @app.route("/")
 def forside():
     return render_template("forside.html")
@@ -61,7 +61,7 @@ def home():
 
     # Server side rendering . Thymeleaf er også server side rendering
     # SSR is when a user requests a webpage and the server genereates a complete HTML page ?
-    cursor = mysql.connection.cursor()
+    cursor = mysql.connection.cursor() #create cursor object to establish connection to the database and use it to execute SQL queries
     cursor.execute("SELECT * FROM products WHERE section='Populær' ORDER BY Title ASC")
     popular_products = cursor.fetchall()
 
@@ -74,7 +74,7 @@ def home():
     drinks_products = cursor.fetchall()
 
     cursor.execute("SELECT * FROM products WHERE section='Dips' ORDER BY Title ASC")
-    dips_products = cursor.fetchall()
+    dips_products = cursor.fetchall() # fetch the result 
 
     # this is serverside rendering, data is sent also to the template
     return render_template(
@@ -92,52 +92,51 @@ def aabningstider():
     return render_template("aabningstider.html")
 
 
-@app.route("/checkout")
+@app.route("/checkout") #when someone is redirected og goes to this endpoint, the funtion is invoked
+@login_required
 def checkout():
-    return render_template("checkout.html", key=stripe_keys["publishable_key"])
+    return render_template("checkout.html", key=stripe_keys["publishable_key"]) # I pass the Stripe publishable key as a variable named 'key' to the template
 
 
-@app.route("/charge", methods=["POST"])  # HTTP verbum, Ændrer
+@app.route("/charge", methods=["POST"])  # HTTP verbum
+@login_required
 def charge():
-    userid = session.get("stored_user_id")
+    customer_id = session.get("stored_user_id") # her anmoder jeg brugerens session ID som blev gemt i linje 318
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM customers WHERE user_id = %s", [userid])
-    results = cur.fetchone()
+    cur.execute("SELECT * FROM customers WHERE customer_id = %s", [customer_id])
+    results = cur.fetchone() # jeg forespørger brugerens PK i databasen
 
-    paid_amount = request.form.get("amountdue")
+    paid_amount = request.form.get("amountdue") #requst.from object retrieves data from checkout hidden field
     amount = paid_amount
 
-    # kommer fra frontenden fra skjult input felt pakket ind i JSON
-    orderJSON = request.form.get("orders")
-    print("Det her er liste af JSON objekter", orderJSON)
+    
+    orderJSON = request.form.get("orders") # kommer fra linje 43 i updateTotalPrice.js fra skjult input felt pakket ind i JSON streng
+    print("Det her er et array af JSON objekt/er", orderJSON)
 
-    parsedJSON = json.loads(orderJSON)
-    print("Dette er den parsede JSON i form af en Python-dictionary")
-    for order in parsedJSON:
-        print(order)
-
+    parsedJSON = json.loads(orderJSON) # parser orderJSON til Python objekter med  Pythons indbyggede JSON modul 'json'
+    print(f"Dette er den parsede JSON i form af en liste af Python-dictionary/ies: {parsedJSON}")
     try:
-        customer = stripe.Customer.create(
-            email=results[5], source=request.form["stripeToken"]
+        customer = stripe.Customer.create( #creating a customer object inside try block
+            email=results[5], source=request.form["stripeToken"] #Token er random string der har en reference til kortdetaljerne og indeholder ingen sensitiv data. 
         )
-        charge = stripe.Charge.create(
+        charge = stripe.Charge.create( #charging the customer with 'stripe.Charge.create' method
             customer=customer.id,
             amount=amount,
             currency="dkk",
-            description="Flask Charge",
+            
         )
 
         # print(charge) viser hvad man kan bruge i koden fra charge
         # parsedCharge = json.loads(charge). Charge er allerede Python dictionary
         print(f'Det er charge id {charge["id"]}')
         print(f"Det er alt hvad charge indeholder{charge}")
-        paymentID = charge["id"]
+        paymentID = charge["id"] #python dictionary
 
         for order in parsedJSON:
-            query = "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`user_id`, `payment_id`) VALUES (%s, %s, %s, DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s, %s)"
+            query = "INSERT INTO `flaskapp`.`orders` (`order_name`, `quantity`, `price`, `bought_at` ,`customer_id`, `payment_id`) VALUES (%s, %s, %s, DATE_ADD(NOW(), INTERVAL 1 HOUR) ,%s, %s)"
             cur.execute(
                 query,
-                (order["title"], order["qnty"], order["price"], userid, paymentID),
+                (order["title"], order["qnty"], order["price"], customer_id, paymentID),
             )
             mysql.connection.commit()
 
@@ -196,8 +195,7 @@ def charge():
 
         total = 0
         totalvarer = 0
-        for order in parsedJSON:
-            print(f"order['qnty'] er af typen: {type(order['qnty'])}")  # Udskriv typen
+        for order in parsedJSON: #itererer 'order' objektet
             mailstr = (
                 mailstr
                 + f"<tr><td>{order['title']}</td><td>{order['qnty']} stk.</td><td>{order['price']},00 kr.</td></tr>"
@@ -219,11 +217,13 @@ def charge():
             + "</body></html>"
         )
 
-        customer_email = results[5]
-
+    
+        customer_email = charge["billing_details"]["name"]
+      
         subject = "Ordrebekræftelse:"
+        
         sender = os.getenv("MAIL_USERNAME")
-        recipients = [customer_email, "cem_akay@icloud.com"]
+        recipients = [customer_email, sender]
 
         msg = Message(subject=subject, sender=sender, recipients=recipients)
         msg.html = mailstr
@@ -233,8 +233,7 @@ def charge():
         return render_template("charge.html", charge=charge, amount=amount)
     except stripe.error.StripeError as e:
         # Handle Stripe errors and return an error message to the user
-        app.logger.error(f"Stripe error: {str(e)}")
-        return f"Stripe error: {str(e)}"
+        return f"Stripe fejl: {str(e)}"
 
 
 @app.route("/opret", methods=["GET", "POST"])
@@ -315,7 +314,7 @@ def login():
             stored_password = results[6]
             if bcrypt.check_password_hash(stored_password, password): #compares stored pw with pw from input field. Returns true if they match else false
                 stored_user_id = results[0]
-                session["stored_user_id"] = stored_user_id
+                session["stored_user_id"] = stored_user_id # Flask gemmer 'stored_user_id' sessionvariablen internt i et session objekt. 
                 user = User(stored_user_id)
                 login_user(user)
 
@@ -332,11 +331,12 @@ def login():
 
 
 @app.route("/logout")
+@login_required
 def logout():
-    # Retrieve the user's ID before removing it from the session
+    # Vi sletter den gemte sessionvariabel fra session objektet
     user_id = session.pop("stored_user_id", None)
 
-    if user_id is not None:
+    if user_id is not None: # vi logger brugeren ud med Flasks login bibliotek
         print(f"user_id {user_id} has been logged out")
         logout_user()
         flash(f"Tak for nu. Vi ses igen snart 🙏 ", "success")

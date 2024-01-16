@@ -1,0 +1,17 @@
+# Exclude virtual environment
+venv/
+
+# Exclude macOS-specific files
+.DS_Store
+
+# Exclude Python bytecode files
+__pycache__/
+
+# Exclude Visual Studio Code specific files
+.vscode/
+
+# Exclude specific files
+noter.txt
+test.html
+
+dockernoter.txt

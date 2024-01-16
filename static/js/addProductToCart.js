@@ -1,13 +1,13 @@
 function addProductToCart(quantity, title, price) {
-  const cartContainer = document.getElementById("cart");
+  const cartContainer = document.getElementById("cart"); // i home html linje 280
   console.log("Vi tager fat i div med id 'cart'");
-  const cartItemCountElement = document.getElementById("cartItemCount");
+  const cartItemCountElement = document.getElementById("cartItemCount"); //cartItemCount er tallet ved siden af kurv svg
   console.log("vi tager fat i det lille tal ved siden af kurven");
 
   const cartItem = document.createElement("div");
   console.log("vi opretter div");
   cartItem.classList.add("cart-item");
-  console.log("et nyt cart-item div er oprettet");
+  
 
   // Store the initial quantity and price
   let currentQuantity = quantity;
