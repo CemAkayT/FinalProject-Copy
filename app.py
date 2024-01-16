@@ -128,7 +128,7 @@ def charge():
 
         # print(charge) viser hvad man kan bruge i koden fra charge
         # parsedCharge = json.loads(charge). Charge er allerede Python dictionary
-        print(f'Det er charge id {charge["id"]}')
+        print(f'Det her er charge id {charge["id"]}')
         print(f"Det er alt hvad charge indeholder{charge}")
         paymentID = charge["id"] #python dictionary
 
