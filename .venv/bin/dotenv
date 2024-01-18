@@ -1,4 +1,6 @@
-#!/Users/cemakay/Desktop/KEAHOP/FinalProject/.venv/bin/python3.11
+#!/bin/sh
+'''exec' "/Users/cemakay/Flask/FinalProject copy/.venv/bin/python3.11" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
