@@ -18,7 +18,7 @@ from models import User
 from flask_login import LoginManager, login_user, login_required, logout_user
 
 login_manager = LoginManager()
-login_manager.init_app(app) #initialize with Flask app
+login_manager.init_app(app) #initialize with Flask app ok I do that 
 login_manager.login_view = "login"  # Set the login view to your login route
 login_manager.login_message = "Login for at se menuen"
 
