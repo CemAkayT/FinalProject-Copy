@@ -1,4 +1,4 @@
-FROM python:3.11.1
+FROM python:3-slim
 WORKDIR /hovedopgave
 COPY . .
 RUN pip install -r requirements.txt
